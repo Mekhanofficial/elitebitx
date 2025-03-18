@@ -3,8 +3,8 @@ import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { faBars, faSun, faUser } from "@fortawesome/free-solid-svg-icons";
-import DashboardSidebar from "../constants/DashBoardSidebar";
 import HeaderSidebar from "../constants/HeaderSidebar";
+import DashboardSidebar from "../constants/DashboardSidebar";
 
 export default function HeaderPage() {
   const location = useLocation();

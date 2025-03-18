@@ -200,6 +200,7 @@ const proRouter = createBrowserRouter([
     path: "/PhotoUpdate",
     element: <PhotoUpdatePage />,
   },
+  
   // {
   //   path: "/Tradingview",
   //   element: <TradingViewChart />,
