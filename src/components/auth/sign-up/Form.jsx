@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../../firebase/firebase-config";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import countryData from "./CountryData";
+import countryData from "./CountryData.json";
 import Button from "../../Button";
 import Input from "../Input";
 
