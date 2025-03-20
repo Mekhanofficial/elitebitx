@@ -58,7 +58,6 @@ export default function HeaderPage() {
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             aria-label="Toggle Sidebar"
           />
-          {currentPage && <h1 className="text-2xl font-bold">{currentPage}</h1>}
         </div>
 
         {/* Right Side */}
