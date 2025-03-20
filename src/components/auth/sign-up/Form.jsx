@@ -81,7 +81,7 @@ const SignUpPage = () => {
             <span className="text-gray-400"> / Sign up</span>
           </h2>
           <h1 className="text-3xl font-extrabold text-amber-600">
-            PR<span className="text-amber-400">IMEHUB</span>
+            ELITE<span className="text-amber-400">BITX</span>
           </h1>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">

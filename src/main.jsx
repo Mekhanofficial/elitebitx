@@ -13,9 +13,9 @@ import FaqItem from "./components/faq/FaqItem.jsx";
 import ContactUs from "./components/ContactIndex.jsx";
 import TradingViewChart from "./components/Tradingview.jsx";
 import CryptocurrencyMarketWidget from "./components/trading-view-widgets/CryptocurrencyMarketWidget.jsx";
-// import LoginPage from "./app/(auth)/login/LoginPage.jsx";
+import LoginPage from "./app/(auth)/login/LoginPage.jsx";
 import DashPage from "./pages/Dashboard.jsx";
-// import SignUpPage from "./components/auth/sign-up/Form.jsx";
+import SignUpPage from "./components/auth/sign-up/Form.jsx";
 import TransactionPage from "./pages/Transactions.jsx";
 import PaymentProofPage from "./pages/PaymentProof.jsx";
 import WithdrawalPage from "./pages/Withdrawal.jsx";
@@ -127,18 +127,18 @@ const proRouter = createBrowserRouter([
     path: "/ContactImg",
     element: <SideImg />,
   },
-  // {
-  //   path: "/LoginPage",
-  //   element: <LoginPage />,
-  // },
-  // {
-  //   path: "/SignUpPage",
-  //   element: <SignUpPage />,
-  // },
-  // {
-  //   path: "/useSignUP",
-  //   element: <SignUpPage />,
-  // },
+  {
+    path: "/LoginPage",
+    element: <LoginPage />,
+  },
+  {
+    path: "/SignUpPage",
+    element: <SignUpPage />,
+  },
+  {
+    path: "/useSignUP",
+    element: <SignUpPage />,
+  },
   {
     path: "/Dashboard",
     element: <DashPage />,
