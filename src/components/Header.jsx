@@ -24,9 +24,33 @@ export default function HeaderPage() {
     "/PasswordUpdate": "Update Password",
     "/AccountSettings": "Account Settings",
     "/Logout": "Logout",
+    "/Assets": "Assets",
+    "/PaymentProof": "Payment Proof",
+    "/transactions": "Transactions",
+    "/PlaceTrade": "Place Trade",
+    "/Subscription": "Subscription",
+    "/MyTraders": "Copy Trade",
+    "/DailySignal": "Daily Signal",
+    "/BuyBots": "Buy Bots",
+    "/Stake": "Stake",
+    "/RealEstate": "Real Estate",
+    "/MyCopytraders": "My Copy Trade",
+    "/TradesRoi": "Trades/ROI",
+    "/BuyCrypto": "Buy Crypto",
+    "/VerifyAccount": "Verify Account",
   };
 
-  const currentPage = pageTitles[location.pathname];
+  // Function to find the current page title based on the path
+  const findCurrentPage = (path) => {
+    for (const [key, value] of Object.entries(pageTitles)) {
+      if (path.startsWith(key)) {
+        return value;
+      }
+    }
+    return null;
+  };
+
+  const currentPage = findCurrentPage(location.pathname);
 
   // Close sidebar when clicking outside
   useEffect(() => {
@@ -70,34 +94,37 @@ export default function HeaderPage() {
         </div>
       </nav>
 
-    {/* Sidebar */}
-<div
-  ref={sidebarRef} // Attach the ref to the sidebar
-  className={`fixed top-0 rounded-2xl left-0 w-64 border-4 border-teal-900 bg-slate-900 text-white z-50 transition-transform duration-200 ease-in-out shadow-lg h-screen overflow-y-auto ${
-    isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-  }`}
->
-  <div className="p-4 h-full flex flex-col">
-    {/* Sidebar Header */}
-    <div className="flex items-center justify-between mb-6">
-      <h1 className="text-2xl font-extrabold text-amber-600">
-        PR<span className="text-amber-400">IMEHUB</span>
-      </h1>
-      <FontAwesomeIcon
-        className="h-6 cursor-pointer"
-        icon={faBars}
-        onClick={() => setIsSidebarOpen(false)}
-        aria-label="Close Sidebar"
-      />
-    </div>
+      {/* Sidebar */}
+      <div
+        ref={sidebarRef} // Attach the ref to the sidebar
+        className={`fixed top-0 rounded-2xl left-0 w-64 border-4 border-teal-900 bg-slate-900 text-white z-50 transition-transform duration-200 ease-in-out shadow-lg h-screen overflow-y-auto ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="p-4 h-full flex flex-col">
+          {/* Sidebar Header */}
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-2xl font-extrabold text-amber-600">
+              PR<span className="text-amber-400">IMEHUB</span>
+            </h1>
+            <FontAwesomeIcon
+              className="h-6 cursor-pointer"
+              icon={faBars}
+              onClick={() => setIsSidebarOpen(false)}
+              aria-label="Close Sidebar"
+            />
+          </div>
 
-    {/* Navigation Links - Show HeaderSidebar for Home, otherwise DashboardSidebar */}
-    <nav className="space-y-4 overflow-y-auto flex-1 pr-2">
-      {location.pathname === "/" ? <HeaderSidebar /> : <DashboardSidebar />}
-    </nav>
-  </div>
-</div>
-      
+          {/* Navigation Links - Show HeaderSidebar for Home, otherwise DashboardSidebar */}
+          <nav className="space-y-4 overflow-y-auto flex-1 pr-2">
+            {location.pathname === "/" ? (
+              <HeaderSidebar />
+            ) : (
+              <DashboardSidebar />
+            )}
+          </nav>
+        </div>
+      </div>
     </>
   );
 }
