@@ -58,9 +58,6 @@ export default function HeaderPage() {
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             aria-label="Toggle Sidebar"
           />
-          <h1 className="text-2xl font-extrabold text-amber-600">
-            PR<span className="text-amber-400">IMEHUB</span>
-          </h1>
           {currentPage && <h1 className="text-2xl font-bold">{currentPage}</h1>}
         </div>
 
