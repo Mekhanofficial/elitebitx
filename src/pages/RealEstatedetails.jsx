@@ -1,10 +1,30 @@
-import React from "react";
+import { faFile, faFileAlt, faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
 
 const ProjectDetail = ({ project, onClose }) => {
+  const [view, setView] = useState("property"); // State to manage the current view
+
   const projectDetails = {
     1: {
       propertyDescription:
         "Hilton City Line is a dual-branded 329-key hotel asset that operates under The Hilton and Homewood Suites flags. The Sponsor has secured a discounted purchase price with a highly accretive deal structure, acquiring a majority equity interest from the current owner of the Property at an attractive cost basis. Seeking to capitalize on the recovery of the Philadelphia hospitality sector, along with assuming the existing below-market, fixed-rate debt on the Property, the deal presents potentially favorable timing to invest in the rebounding market and asset class. In addition, the potential to sell the Property unencumbered by the franchise agreements, which expire at the end of the target hold period, may provide an opportune exit strategy.",
+      documentDescription:
+        "Hilton City Line is a dual-branded 329-key hotel asset that operates under The Hilton and Homewood Suites flags. The Sponsor has secured a discounted purchase price with a highly accretive deal structure, acquiring a majority equity interest from the current owner of the Property at an attractive cost basis. Seeking to capitalize on the recovery of the Philadelphia hospitality sector, along with assuming the existing below-market, fixed-rate debt on the Property, the deal presents potentially favorable timing to invest in the rebounding market and asset class. In addition, the potential to sell the Property unencumbered by the franchise agreements, which expire at the end of the target hold period, may provide an opportune exit strategy.",
+      documents: [
+        {
+          name: "Financial Report",
+          link: "https://example.com/financial-report.pdf",
+        },
+        {
+          name: "Legal Documents",
+          link: "https://example.com/legal-documents.pdf",
+        },
+        {
+          name: "Project Overview",
+          link: "https://example.com/project-overview.pdf",
+        },
+      ],
       whyProperty: [
         "We view the acquisition terms as compelling for this deal – most notably the discounted purchase price that is ~$5M less than competing offers (~$10MM less after taking into account closing costs and capex) and the Property's assumable below market, fixed-rate debt.",
         "We observe a strong positive trend in recent revenue metrics, with net operating income up 10% year-to-date compared to budget projections and tracking well towards the projected 2025 exit NOI, conservatively underwritten at 85% of 2019 (pre-pandemic) numbers.",
@@ -27,6 +47,22 @@ const ProjectDetail = ({ project, onClose }) => {
     2: {
       propertyDescription:
         "Fabian Labs is a two-building, life science campus totaling 24,000 SF located in the heart of Silicon Valley in Palo Alto, 35 miles south of San Francisco, CA. Graymark Capital acquired the Property in 2020 and intends to design and buildout the turnkey lab/office space to meet the needs of life science tenants that are seeking space in the constrained, competitive market of the Bay Area. Proximate to the key components emerging life science companies need – the Bay Area life science venture capital/private equity environment and deep talent pool from top research institutions (Stanford University and University of California Berkeley) – Fabian Labs will be poised to capitalize in the #2 life science market in the country.",
+      documentDescription:
+        "Fabian Labs is a two-building, life science campus totaling 24,000 SF located in the heart of Silicon Valley in Palo Alto, 35 miles south of San Francisco, CA. Graymark Capital acquired the Property in 2020 and intends to design and buildout the turnkey lab/office space to meet the needs of life science tenants that are seeking space in the constrained, competitive market of the Bay Area. Proximate to the key components emerging life science companies need – the Bay Area life science venture capital/private equity environment and deep talent pool from top research institutions (Stanford University and University of California Berkeley) – Fabian Labs will be poised to capitalize in the #2 life science market in the country.",
+      documents: [
+        {
+          name: "Financial Report",
+          link: "https://example.com/financial-report.pdf",
+        },
+        {
+          name: "Legal Documents",
+          link: "https://example.com/legal-documents.pdf",
+        },
+        {
+          name: "Project Overview",
+          link: "https://example.com/project-overview.pdf",
+        },
+      ],
       whyProperty: [],
       whySponsor: [],
       type: "Life Science/Lab",
@@ -41,6 +77,22 @@ const ProjectDetail = ({ project, onClose }) => {
     3: {
       propertyDescription:
         "Go Store It Nashville is a ground-up, self-storage development opportunity presented by Madison Capital Group. The Project is located in Franklin, TN, a rapidly expanding submarket (five-year population growth projection of 9%) located approximately 25 miles south of Nashville. When complete, the Class A property will include 1,286 climate-controlled units and be managed by Go Store It, a wholly-owned subsidiary of Madison Capital.",
+      documentDescription:
+        "Go Store It Nashville is a ground-up, self-storage development opportunity presented by Madison Capital Group. The Project is located in Franklin, TN, a rapidly expanding submarket (five-year population growth projection of 9%) located approximately 25 miles south of Nashville. When complete, the Class A property will include 1,286 climate-controlled units and be managed by Go Store It, a wholly-owned subsidiary of Madison Capital.",
+      documents: [
+        {
+          name: "Financial Report",
+          link: "https://example.com/financial-report.pdf",
+        },
+        {
+          name: "Legal Documents",
+          link: "https://example.com/legal-documents.pdf",
+        },
+        {
+          name: "Project Overview",
+          link: "https://example.com/project-overview.pdf",
+        },
+      ],
       whyProperty: [
         "We believe this deal could be well-positioned to capitalize on the significant population growth in Franklin, TN, as one of the first-to-market self-storage assets in the burgeoning submarket.",
         "Franklin’s multifamily inventory has more than doubled since 2010, a strong potential indication of new, unmet self-storage demand in the submarket.",
@@ -63,6 +115,22 @@ const ProjectDetail = ({ project, onClose }) => {
     4: {
       propertyDescription:
         "The Mirage is an 816-bed, garden-style student housing asset located in San Marcos, TX, almost halfway between Austin and San Antonio along I-35. San Marcos is home to Texas State University (38,376 enrollment 2022-23), a university with a growing student body that has outpaced its current supply of student housing options, resulting in high occupancy rates and steady rent growth. The Sponsor acquired the asset on May 1st, 2023 and intends to implement a comprehensive value-add renovation strategy on all units, community amenities, and common areas that will position the Property, which sits directly along the campus shuttle route, to capture NOI upside given the excess demand for upgraded, proximate student housing options.",
+      documentDescription:
+        "The Mirage is an 816-bed, garden-style student housing asset located in San Marcos, TX, almost halfway between Austin and San Antonio along I-35. San Marcos is home to Texas State University (38,376 enrollment 2022-23), a university with a growing student body that has outpaced its current supply of student housing options, resulting in high occupancy rates and steady rent growth. The Sponsor acquired the asset on May 1st, 2023 and intends to implement a comprehensive value-add renovation strategy on all units, community amenities, and common areas that will position the Property, which sits directly along the campus shuttle route, to capture NOI upside given the excess demand for upgraded, proximate student housing options.",
+      documents: [
+        {
+          name: "Financial Report",
+          link: "https://example.com/financial-report.pdf",
+        },
+        {
+          name: "Legal Documents",
+          link: "https://example.com/legal-documents.pdf",
+        },
+        {
+          name: "Project Overview",
+          link: "https://example.com/project-overview.pdf",
+        },
+      ],
       whyProperty: [],
       whySponsor: [],
       type: "Student Housing",
@@ -77,6 +145,22 @@ const ProjectDetail = ({ project, onClose }) => {
     5: {
       propertyDescription:
         "Palmetto Industrial Park is a newly constructed, three-building industrial property located in Palmetto, FL, approximately 45 miles south of Tampa. Having executed the purchase and sale agreement back in Q2 2022, the Sponsor, Stonemont Financial Group, will acquire the Property upon completion, which is expected to be in Q3 2023. Upon closing, the Sponsor intends to lease up the buildings, which are divisible down to 40,000 SF units to appeal to mid-sized, logistic-focused users in the low vacancy submarket (1.9%), and exit the Project at the end of the 2-year targeted hold period.",
+      documentDescription:
+        "Palmetto Industrial Park is a newly constructed, three-building industrial property located in Palmetto, FL, approximately 45 miles south of Tampa. Having executed the purchase and sale agreement back in Q2 2022, the Sponsor, Stonemont Financial Group, will acquire the Property upon completion, which is expected to be in Q3 2023. Upon closing, the Sponsor intends to lease up the buildings, which are divisible down to 40,000 SF units to appeal to mid-sized, logistic-focused users in the low vacancy submarket (1.9%), and exit the Project at the end of the 2-year targeted hold period.",
+      documents: [
+        {
+          name: "Financial Report",
+          link: "https://example.com/financial-report.pdf",
+        },
+        {
+          name: "Legal Documents",
+          link: "https://example.com/legal-documents.pdf",
+        },
+        {
+          name: "Project Overview",
+          link: "https://example.com/project-overview.pdf",
+        },
+      ],
       whyProperty: [
         "We view the acquisition timing of this Project at the completion of construction as potentially advantageous in reducing the uncertainty typically found with labor and material costs for most development deals.",
         "We believe the constrained industrial market and submarket, both currently below 2% vacancy, are a potentially strong indicator of the demand for newly built space.",
@@ -99,6 +183,22 @@ const ProjectDetail = ({ project, onClose }) => {
     6: {
       propertyDescription:
         "Bridge Labs at Pegasus Park will be a redeveloped, state-of-the-art life science asset, located within the dynamic, future-focused campus of Pegasus Park, less than 15 minutes from downtown Dallas, TX. The Sponsor, Montgomery Street Partners, benefits from the strategic partnership with Lyda Hill Philanthropies (“LHP”), whose affiliate is an investor in the campus partnership and will be a limited partner in Bridge Labs at Pegasus Park. The LHP team has extensive life science experience and strong ties to venture capital firms within the North Texas ecosystem. Bridge Labs will be a 135,000 SF purpose-built asset that will be the region’s first institutional-quality, non-incubator space with top-of-the-line infrastructure, amenities, and shared spaces. Situated adjacent to BioLabs, the premier coworking incubator space for life science startups that selected Dallas as its first non-coastal/gateway market, Bridge Labs will seek to capture the outflow of companies seeking more space upon “graduating” from the incubator or fleeing the coastal hubs in search of emerging science ecosystems and more cost-effective lease opportunities. Dallas has been recognized as a top three emerging life science hub and Bridge Labs will seek to take advantage of filling the void of a lack of available space in the fast-growing market.",
+      documentDescription:
+        "Bridge Labs at Pegasus Park will be a redeveloped, state-of-the-art life science asset, located within the dynamic, future-focused campus of Pegasus Park, less than 15 minutes from downtown Dallas, TX. The Sponsor, Montgomery Street Partners, benefits from the strategic partnership with Lyda Hill Philanthropies (“LHP”), whose affiliate is an investor in the campus partnership and will be a limited partner in Bridge Labs at Pegasus Park. The LHP team has extensive life science experience and strong ties to venture capital firms within the North Texas ecosystem. Bridge Labs will be a 135,000 SF purpose-built asset that will be the region’s first institutional-quality, non-incubator space with top-of-the-line infrastructure, amenities, and shared spaces. Situated adjacent to BioLabs, the premier coworking incubator space for life science startups that selected Dallas as its first non-coastal/gateway market, Bridge Labs will seek to capture the outflow of companies seeking more space upon “graduating” from the incubator or fleeing the coastal hubs in search of emerging science ecosystems and more cost-effective lease opportunities. Dallas has been recognized as a top three emerging life science hub and Bridge Labs will seek to take advantage of filling the void of a lack of available space in the fast-growing market.",
+      documents: [
+        {
+          name: "Financial Report",
+          link: "https://example.com/financial-report.pdf",
+        },
+        {
+          name: "Legal Documents",
+          link: "https://example.com/legal-documents.pdf",
+        },
+        {
+          name: "Project Overview",
+          link: "https://example.com/project-overview.pdf",
+        },
+      ],
       whyProperty: [
         "We believe the burgeoning Dallas life science market is emerging as a leading centrally located life science hub, offering cheaper rents than the coastal markets and an educated workforce stemming from multiple major research universities.",
         "Bridge Labs is uniquely well-positioned, in our view, within thriving Pegasus Park and adjacent to BioLabs, the premier national life science incubator platform.",
@@ -123,41 +223,92 @@ const ProjectDetail = ({ project, onClose }) => {
   const details = projectDetails[project.id];
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
-      <div className="bg-slate-800 p-8 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center p-4">
+      <div className="bg-slate-800 p-8 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto">
+        <img
+          src={project.image}
+          alt={project.name}
+          className="w-full h-64 object-cover rounded-lg mb-4"
+        />
         <h2 className="text-3xl font-bold text-white mb-6">{project.name}</h2>
         <p className="text-gray-400 mb-6 text-lg">{project.profitRate}</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <h3 className="text-xl font-semibold text-white mb-4">
-              The Property
-            </h3>
-            <p className="text-gray-400 mb-4">{details.propertyDescription}</p>
+            <div className="text-md font-semibold flex items-center gap-4 text-white mb-4">
+              <button
+                onClick={() => setView("property")}
+                className={`p-2 rounded-lg ${
+                  view === "property" ? "bg-teal-700" : "bg-slate-700"
+                }`}
+              >
+                The Property
+              </button>
+              <button
+                onClick={() => setView("document")}
+                className={`p-2 rounded-lg ${
+                  view === "document" ? "bg-teal-700" : "bg-slate-700"
+                }`}
+              >
+                Document
+              </button>
+            </div>
 
-            {details.whyProperty.length > 0 && (
+            {view === "property" ? (
               <>
-                <h3 className="text-xl font-semibold text-white mb-4">
-                  Why This Property:
-                </h3>
-                <ul className="list-disc list-inside text-gray-400 mb-4">
-                  {details.whyProperty.map((point, index) => (
-                    <li key={index}>{point}</li>
-                  ))}
-                </ul>
+                <p className="text-gray-400 mb-4">
+                  {details.propertyDescription}
+                </p>
+
+                {details.whyProperty.length > 0 && (
+                  <>
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      Why This Property:
+                    </h3>
+                    <ul className="list-disc list-inside text-gray-400 mb-4">
+                      {details.whyProperty.map((point, index) => (
+                        <li key={index}>{point}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {details.whySponsor.length > 0 && (
+                  <>
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      Why This Sponsor:
+                    </h3>
+                    <ul className="list-disc list-inside text-gray-400 mb-4">
+                      {details.whySponsor.map((point, index) => (
+                        <li key={index}>{point}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
               </>
-            )}
-
-            {details.whySponsor.length > 0 && (
+            ) : (
               <>
-                <h3 className="text-xl font-semibold text-white mb-4">
-                  Why This Sponsor:
-                </h3>
-                <ul className="list-disc list-inside text-gray-400 mb-4">
-                  {details.whySponsor.map((point, index) => (
-                    <li key={index}>{point}</li>
+                <p className="text-gray-400 mb-4">
+                  {details.documentDescription}
+                </p>
+                <div className="flex flex-col gap-4 ">
+                  {details.documents.map((doc, index) => (
+                    <a
+                      key={index}
+                      href={doc.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-teal-400 hover:text-teal-200"
+                    >
+                      <FontAwesomeIcon
+                        className="h-6 cursor-pointer text-teal-600"
+                        icon={faFileAlt}
+                      />
+
+                      <span>{doc.name}</span>
+                    </a>
                   ))}
-                </ul>
+                </div>
               </>
             )}
           </div>
@@ -167,32 +318,63 @@ const ProjectDetail = ({ project, onClose }) => {
               Project Breakdown
             </h3>
             <div className="bg-slate-700 p-4 rounded-lg">
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div>
-                  <p className="text-gray-400">Type</p>
-                  <p className="text-white">{details.type}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">ACRES</p>
-                  <p className="text-white">{details.acres}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">STRATEGY</p>
-                  <p className="text-white">{details.strategy}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">OBJECTIVE</p>
-                  <p className="text-white">{details.objective}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">MINIMUM</p>
-                  <p className="text-white">{details.minimum}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">ROI</p>
-                  <p className="text-white">{details.roi}</p>
-                </div>
-              </div>
+              <table className="w-full border-collapse border border-slate-500">
+                <thead>
+                  <tr className="bg-slate-800">
+                    <th className="text-gray-400 text-left p-3 border border-slate-600">
+                      Type
+                    </th>
+                    <th className="text-gray-400 text-left p-3 border border-slate-600">
+                      ACRES
+                    </th>
+                    <th className="text-gray-400 text-left p-3 border border-slate-600">
+                      STRATEGY
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="text-white p-3 border border-slate-600">
+                      {details.type}
+                    </td>
+                    <td className="text-white p-3 border border-slate-600">
+                      {details.acres}
+                    </td>
+                    <td className="text-white p-3 border border-slate-600">
+                      {details.strategy}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table className="w-full border-collapse border border-slate-500 mt-4">
+                <thead>
+                  <tr className="bg-slate-800">
+                    <th className="text-gray-400 text-left p-3 border border-slate-600">
+                      OBJECTIVE
+                    </th>
+                    <th className="text-gray-400 text-left p-3 border border-slate-600">
+                      MINIMUM
+                    </th>
+                    <th className="text-gray-400 text-left p-3 border border-slate-600">
+                      ROI
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="text-white p-3 border border-slate-600">
+                      {details.objective}
+                    </td>
+                    <td className="text-white p-3 border border-slate-600">
+                      {details.minimum}
+                    </td>
+                    <td className="text-white p-3 border border-slate-600">
+                      {details.roi}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
             <h3 className="text-xl font-semibold text-white mt-6 mb-4">
@@ -201,16 +383,25 @@ const ProjectDetail = ({ project, onClose }) => {
             <p className="text-gray-400 mb-4">
               You could earn up to {details.roi} on {details.minimum}
             </p>
-            <div className="bg-slate-700 p-4 rounded-lg">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-gray-400">Value:</p>
-                  <p className="text-white">${details.value}</p>
-                </div>
-                <div>
-                  <p className="text-gray-400">Duration (Days):</p>
-                  <p className="text-white">{details.duration}</p>
-                </div>
+            <div className="bg-slate-900 p-4 rounded-lg justify-center grid">
+              <div className=" gap-4">
+                <p className="text-gray-400 mb-2">Amount:</p>
+                <button className="bg-slate-950 flex items-center justify-between rounded-lg my-4 w-96 text-left font-semibold text-gray-600 p-2">
+                  {details.value}
+                  <h2 className="bg-teal-800 text-slate-900 font-semibold p-1 rounded-md">
+                    USD
+                  </h2>
+                </button>
+                <select className="bg-slate-950 flex items-center justify-between rounded-lg my-4 w-96 text-left font-semibold text-gray-600 p-2">
+                  Duration(Days):
+                  <option>3 Days</option>
+                  <option>5 Days</option>
+                  <option>7 Days</option>
+                  <option>30 Days</option>
+                </select>
+                <button className="w-96 bg-teal-600 text-white px-4 py-2 rounded-lg">
+                  Invest
+                </button>
               </div>
             </div>
           </div>
@@ -219,7 +410,7 @@ const ProjectDetail = ({ project, onClose }) => {
         <div className="flex justify-end mt-6">
           <button
             onClick={onClose}
-            className="bg-red-600 text-white px-6 py-2 rounded-lg"
+            className="bg-teal-600 text-white px-6 py-2 rounded-lg"
           >
             Close
           </button>

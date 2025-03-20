@@ -25,7 +25,7 @@ export default function DashboardSidebar() {
 
   const mainLinks = [
     { to: "/Dashboard", icon: faHome, text: "Home" },
-    { to: "/Markets", icon: faCoins, text: "Assets" },
+    { to: "/Assets", icon: faCoins, text: "Assets" },
     { to: "/deposits", icon: faWallet, text: "Deposit" },
     { to: "/Withdrawal", icon: faMoneyBillTransfer, text: "Withdraw" },
     { to: "/PaymentProof", icon: faReceipt, text: "Payment Proof" },
@@ -34,7 +34,7 @@ export default function DashboardSidebar() {
   ];
 
   const tradingLinks = [
-    { to: "/AssetDetails", icon: faChartLine, text: "Place Trade" },
+    { to: "/PlaceTrade", icon: faChartLine, text: "Place Trade" },
     { to: "/Subscription", icon: faClipboardList, text: "Subscription" },
     { to: "/MyTraders", icon: faUsers, text: "Copy Trade" },
     { to: "/DailySignal", icon: faChartLine, text: "Daily Signal" },

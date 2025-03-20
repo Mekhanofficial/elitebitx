@@ -16,7 +16,7 @@ const abbreviateVolume = (volume) => {
   }
 };
 
-export default function MarketPage() {
+export default function AssetPage() {
   const [cryptoData, setCryptoData] = useState([]);
   const [news, setNews] = useState([]);
   const { symbol } = useParams();
@@ -59,19 +59,27 @@ export default function MarketPage() {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await fetch(
-          "https://newsapi.org/v2/everything?q=crypto&apiKey=cd73ac3d48314b67b9b116b14a37fcdb"
-        );
-        const data = await response.json();
-        if (data.articles) {
+        const response = await axios.get("https://newsapi.org/v2/everything", {
+          params: {
+            q: "crypto",
+            apiKey: "cd73ac3d48314b67b9b116b14a37fcdb",
+          },
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        if (response.data.articles) {
           // Filter news to only include articles with images
-          const filteredNews = data.articles
+          const filteredNews = response.data.articles
             .filter((article) => article.urlToImage)
             .slice(0, 4); // Limit to 4 articles
           setNews(filteredNews);
         }
       } catch (error) {
         console.error("Error fetching news:", error);
+        // Set an empty array or fallback data if the request fails
+        setNews([]);
       }
     };
 
@@ -127,31 +135,35 @@ export default function MarketPage() {
           <div className="w-full lg:w-1/3 bg-slate-800 p-6 rounded-lg shadow-md border border-gray-700">
             <h2 className="text-lg font-bold text-teal-500 mb-6">LIVE NEWS</h2>
             <div className="space-y-6">
-              {news.map((article, index) => (
-                <a
-                  key={index}
-                  href={article.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block hover:opacity-80 transition-opacity"
-                >
-                  <div className="flex items-start space-x-4">
-                    <img
-                      src={article.urlToImage}
-                      alt="News"
-                      className="w-32 h-32 object-cover rounded-md"
-                    />
-                    <div>
-                      <h3 className="font-semibold text-white text-sm mb-2">
-                        {article.title}
-                      </h3>
-                      <p className="text-xs text-gray-400">
-                        {article.description}
-                      </p>
+              {news.length > 0 ? (
+                news.map((article, index) => (
+                  <a
+                    key={index}
+                    href={article.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block hover:opacity-80 transition-opacity"
+                  >
+                    <div className="flex items-start space-x-4">
+                      <img
+                        src={article.urlToImage}
+                        alt="News"
+                        className="w-32 h-32 object-cover rounded-md"
+                      />
+                      <div>
+                        <h3 className="font-semibold text-white text-sm mb-2">
+                          {article.title}
+                        </h3>
+                        <p className="text-xs text-gray-400">
+                          {article.description}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </a>
-              ))}
+                  </a>
+                ))
+              ) : (
+                <p className="text-gray-400">No news available.</p>
+              )}
               {/* Single "Read More" Button at the Bottom */}
               <a
                 href="https://www.example.com/crypto-news" // Replace with your desired URL

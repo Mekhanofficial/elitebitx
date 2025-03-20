@@ -13,10 +13,10 @@ export default function ReferralsPage() {
   return (
     <>
       <HeaderPage />
-      <section className="bg-slate-950  min-h-screen">
-        <div className="p-5 flex justify-between mx-20">
-          {/* Referral Stats */}
-          <div className="flex items-center gap-4 bg-gray-900 text-white p-4 rounded-lg shadow-md">
+      <section className="bg-slate-950 min-h-screen flex flex-col items-center p-4 md:p-10">
+        {/* Referral Stats */}
+        <div className="flex flex-col md:flex-row gap-6 w-full max-w-4xl">
+          <div className="flex items-center gap-4 bg-gray-900 text-white p-4 rounded-lg shadow-md w-full md:w-auto">
             <FontAwesomeIcon
               icon={faUserFriends}
               className="h-6 text-teal-400"
@@ -28,7 +28,7 @@ export default function ReferralsPage() {
           </div>
 
           {/* Referral Link */}
-          <div className="flex items-center gap-3 mt-6 bg-gray-800 text-white p-3 rounded-lg shadow-md">
+          <div className="flex items-center gap-3 bg-gray-800 text-white p-3 rounded-lg shadow-md w-full md:w-auto">
             <h3 className="text-sm break-all">{referralLink}</h3>
             <button
               onClick={handleCopy}
@@ -40,18 +40,27 @@ export default function ReferralsPage() {
           </div>
         </div>
 
-        {/* Referrals List */}
-        <div className="text-white font-semibold rounded-md bg-slate-900 p-5 mx-4 lg:mx-10 my-6 border border-gray-800 hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105 transition-all duration-300 overflow-x-auto">
-          <h1 className="font-semibold text-xl mb-5">All Referrals</h1>
-          <div className="flex justify-between items-center min-w-[800px] text-gray-400 border-b border-gray-700 pb-2">
-            <h2>ID</h2>
-            <h2>Email</h2>
-            <h2>Full Name</h2>
-            <h2>Date</h2>
-          </div>
-          <h1 className="text-2xl text-center mt-10 text-gray-500 font-bold">
-            No Referrals
+        {/* Referrals List with Scroll */}
+        <div className="bg-slate-900 p-5 mt-12 rounded-xl shadow-lg border border-gray-800 max-w-full w-full">
+          <h1 className="text-white font-semibold text-xl mb-5 text-center">
+            All Referrals
           </h1>
+
+          <div className="overflow-x-auto">
+            <div className="min-w-[800px]">
+              <div className="flex justify-between items-center text-white text-sm font-semibold border-b border-gray-700 pb-2">
+                <h2>ID</h2>
+                <h2>Email</h2>
+                <h2>Full Name</h2>
+                <h2>Date</h2>
+              </div>
+
+              {/* Empty state */}
+              <div className="text-center text-gray-500 text-lg font-bold mt-5">
+                No Referrals
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>

@@ -16,7 +16,6 @@ import CryptocurrencyMarketWidget from "./components/trading-view-widgets/Crypto
 // import LoginPage from "./app/(auth)/login/LoginPage.jsx";
 import DashPage from "./pages/Dashboard.jsx";
 // import SignUpPage from "./components/auth/sign-up/Form.jsx";
-import MarketPage from "./pages/Markets.jsx";
 import TransactionPage from "./pages/Transactions.jsx";
 import PaymentProofPage from "./pages/PaymentProof.jsx";
 import WithdrawalPage from "./pages/Withdrawal.jsx";
@@ -40,8 +39,8 @@ import DailySignalPage from "./pages/DailySignal.jsx";
 import RealestPage from "./pages/RealEstate.jsx";
 import Modal from "./pages/Modal.jsx";
 import ProjectDetail from "./pages/RealEstatedetails.jsx";
-import AssetDetailsPage from "./pages/AssetDetails.jsx";
-// import TradingViewChart from "./components/TradingView.jsx";
+import PlaceTradePage from "./pages/PlaceTrade.jsx";
+import AssetPage from "./pages/Assets.jsx";
 
 
 
@@ -104,14 +103,6 @@ const proRouter = createBrowserRouter([
     path: "/Stake",
     element: <StakePage />,
   },
-  // {
-  //   path: "/CoinLib",
-  //   element: <CoinLibHorizontalliveTicker />,
-  // },
-  {
-    path: "/faq",
-    element: <FAQ />,
-  },
   {
     path: "/Transactions",
     element: <TransactionPage />,
@@ -153,21 +144,17 @@ const proRouter = createBrowserRouter([
     element: <DashPage />,
   },
   {
-    path: "/Markets",
-    element: <MarketPage />,
+    path: "/Assets",
+    element: <AssetPage />,
   },
   {
-    path: "/AssetDetails",
-    element: <AssetDetailsPage/>,
+    path: "/PlaceTrade",
+    element: <PlaceTradePage/>,
   },
   {
     path: "/Mining",
     element: <MiningPage />,
   },
-  // {
-  //   path: "/Account",
-  //   element: <AccountPage />,
-  // },
   {
     path: "/Deposits",
     element: <DepositPage />,
@@ -200,11 +187,6 @@ const proRouter = createBrowserRouter([
     path: "/PhotoUpdate",
     element: <PhotoUpdatePage />,
   },
-  
-  // {
-  //   path: "/Tradingview",
-  //   element: <TradingViewChart />,
-  // },
 ]);
 
 root.render(

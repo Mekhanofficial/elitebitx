@@ -47,12 +47,12 @@ export default function DepositPage() {
   return (
     <>
       <HeaderPage />
-      <section className="min-h-screen flex gap-6 p-6  bg-gray-900 text-white">
-        <div className="w-1/2 bg-gray-800 p-6 rounded-xl">
-          <h2 className="text-2xl font-bold mb-4">Make Deposit</h2>
+      <section className="min-h-screen p-6 bg-gray-900 text-white flex flex-col md:flex-row gap-6">
+        <div className="w-full md:w-1/2 bg-slate-950 p-6 rounded-xl">
+          <h2 className="text-3xl font-bold mb-4">Make Deposit</h2>
           <label className="block mb-2">Deposit Method:</label>
           <select
-            className="w-full p-2 bg-gray-700 rounded mb-4"
+            className="w-full p-2 bg-slate-800 border border-slate-700 rounded mb-4"
             value={selectedCrypto}
             onChange={(e) => setSelectedCrypto(e.target.value)}
           >
@@ -86,7 +86,7 @@ export default function DepositPage() {
           />
         </div>
 
-        <div className="w-1/2 bg-gray-800 p-6 rounded-xl">
+        <div className="w-full md:w-1/2 bg-slate-950 p-6 rounded-xl">
           <h2 className="text-2xl font-bold mb-4">Pay with Crypto</h2>
           <label className="block mb-2">Address:</label>
           <div className="flex items-center gap-2 mb-4">
@@ -98,7 +98,7 @@ export default function DepositPage() {
             />
             <button
               onClick={copyToClipboard}
-              className="bg-orange-500 p-2 rounded text-white"
+              className="bg-teal-800 p-2 rounded text-white"
               disabled={!selectedMethod}
             >
               Copy
@@ -125,7 +125,7 @@ export default function DepositPage() {
           )}
           <button
             onClick={handleDeposit}
-            className="w-full bg-orange-500 p-3 rounded text-white text-lg font-bold mt-4"
+            className="w-full bg-teal-600 p-3 rounded text-white text-lg font-bold mt-4"
           >
             Deposited
           </button>
@@ -133,8 +133,8 @@ export default function DepositPage() {
       </section>
 
       {showSuccess && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-gray-800 p-6 rounded-xl text-center text-white">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
+          <div className="bg-gray-800 p-6 rounded-xl text-center text-white w-full max-w-sm">
             <FontAwesomeIcon
               icon={faCheckCircle}
               className="text-green-500 text-4xl mb-4"
@@ -144,7 +144,7 @@ export default function DepositPage() {
             <p>Kindly upload payment proof for confirmation.</p>
             <button
               onClick={() => setShowSuccess(false)}
-              className="mt-4 bg-orange-500 p-2 rounded text-white"
+              className="mt-4 bg-teal-500 p-2 rounded text-white w-full"
             >
               OK
             </button>

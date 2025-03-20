@@ -18,7 +18,7 @@ const realest = [
       "Discounted acquisition of a recently renovated hotel property in Philadelphia with below-market, assumable debt.",
     amount: "$33,000.00",
     botLevel: "25",
-    winRate: "68.7%",
+    Roi: "68.7%",
   },
   {
     id: 2,
@@ -28,7 +28,7 @@ const realest = [
       "Two-building life science conversion in the heart of Silicon Valley and minutes from Stanford University.",
     amount: "$24,000.00",
     botLevel: "30",
-    winRate: "57%",
+    Roi: "57%",
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ const realest = [
     profitRate:
       "Class A self-storage development in one of Nashville's fastest growing suburbs with constrained supply.",
     amount: "$15,000.00",
-    winRate: "18%",
+    Roi: "18%",
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const realest = [
     profitRate:
       "A Texas State University student housing acquisition assuming below-market fixed-rate debt.",
     amount: "$32,500.00",
-    winRate: "84.35%",
+    Roi: "84.35%",
   },
   {
     id: 5,
@@ -55,7 +55,7 @@ const realest = [
     profitRate:
       "Acquisition of a newly constructed three-building industrial property, attracting prospective tenants.",
     amount: "$25,000.00",
-    winRate: "78%",
+    Roi: "78%",
   },
   {
     id: 6,
@@ -64,7 +64,7 @@ const realest = [
     profitRate:
       "Life science redevelopment within a thriving new biotech-focused campus in Dallas.",
     amount: "$12,000.00",
-    winRate: "85%",
+    Roi: "85%",
   },
 ];
 
@@ -124,7 +124,7 @@ export default function RealestPage() {
                 <div className="text-center">
                   <h1 className="font-bold text-white">{real.amount}</h1>
                   <p className="text-gray-400 text-sm font-semibold">MINIMUM</p>
-                  <h1 className="font-bold text-white ">{real.winRate}</h1>
+                  <h1 className="font-bold text-white ">{real.Roi}</h1>
                 </div>
                 <div className="text-center">
                   <h1 className="font-bold text-white">ROI</h1>
@@ -160,15 +160,26 @@ export default function RealestPage() {
             className="bg-slate-800 p-8 rounded-lg w-full max-w-md"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl font-bold text-white mb-4">
-              Invest in {selectedReal.name}
+            <h2 className="text-2xl text-center font-bold text-white mb-4">
+              {selectedReal.name}
             </h2>
-            <p className="text-gray-400 mb-4">Enter your investment amount:</p>
-            <input
-              type="number"
-              className="w-full p-2 rounded-lg bg-slate-700 text-white mb-4"
-              placeholder="Amount"
-            />
+            <p className="text-gray-400 mb-2">Amount:</p>
+            <button className="bg-slate-900 flex items-center justify-between rounded-lg my-4 w-96 text-left font-semibold text-gray-600 p-2">
+              {selectedReal.amount}
+              <h2 className="bg-teal-800 text-slate-900 font-semibold p-1 rounded-md">
+                USD
+              </h2>
+            </button>
+            <select className="bg-slate-900 flex items-center justify-between rounded-lg my-4 w-96 text-left font-semibold text-gray-600 p-2">
+              Duration(Days):
+              <option>3 Days</option>
+              <option>5 Days</option>
+              <option>7 Days</option>
+              <option>30 Days</option>
+            </select>
+            <button className="bg-slate-900 flex items-center justify-between rounded-lg my-4 w-96 text-left font-semibold text-gray-600 p-2">
+              {selectedReal.Roi}
+            </button>
             <button
               className="w-full bg-teal-600 text-white px-4 py-2 rounded-lg"
               onClick={closeModal}

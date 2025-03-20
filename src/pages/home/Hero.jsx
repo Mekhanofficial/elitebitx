@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import ParticlesComponent from "../../components/ParticlesBackground.jsx";
-import HeaderPage from "../../components/Header.jsx";
 import px1 from "../../pictures/px1.png";
 import px2 from "../../pictures/px2.png";
 import px3 from "../../pictures/px3.png";
@@ -13,7 +12,7 @@ import px9 from "../../pictures/px9.png";
 import px10 from "../../pictures/px10.png";
 import px11 from "../../pictures/px11.png";
 import px12 from "../../pictures/px12.png";
-import px13 from "../../pictures/px13.jpg";
+import moon1 from "../../pictures/moon1.jpg";
 import dp1 from "../../pictures/dp1.jpeg";
 import dp2 from "../../pictures/dp2.jpeg";
 import dp3 from "../../pictures/dp3.jpg";
@@ -35,9 +34,8 @@ import {
 import { faBitcoin } from "@fortawesome/free-brands-svg-icons";
 import FAQ from "../../components/faq/index.jsx";
 import ContactUs from "../../components/ContactIndex.jsx";
-import CoinMarketCapWidget from "../../components/CoinMarketCapWidget.jsx";
-import TradingViewChart from "../../components/Tradingview.jsx";
-import CryptocurrencyMarketWidget from "../../components/trading-view-widgets/CryptocurrencyMarketWidget.jsx";
+import HomeHeaderPage from "../../components/HomeHeader.jsx";
+import FooterPage from "../../components/Footer.jsx";
 
 // CSS for floating animations
 const floatingAnimations = `
@@ -58,11 +56,26 @@ const floatingAnimations = `
   .floating3 { animation: float3 3.5s ease-in-out infinite; }
 `;
 
-const ExchangeRateContainer = ({ currency, rate, color = "teal-700" }) => {
+const ExchangeRateContainer = ({
+  type,
+  currency,
+  rate,
+  color = "teal-700",
+  currency2,
+  rate2,
+  color2 = "teal-700",
+}) => {
   return (
     <div className="bg-gray-950 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-      <h4 className="text-white">
-        <span className={`text-${color}`}>1 {currency} </span>= {rate}
+      <h1 className="text-white text-lg font-semibold">{type}</h1>
+
+      <h4 className="text-white flex flex-col  ">
+        <div>
+          <span className={`text-${color}`}>{currency} </span>= {rate}
+        </div>
+        <div>
+          <span className={`text-${color2}`}> {currency2} </span>= {rate2}
+        </div>
       </h4>
     </div>
   );
@@ -198,12 +211,58 @@ export default function HomeHeroPage() {
   ];
 
   const exchangeRates = [
-    { currency: "ETH", rate: "$1,865.36", color: "teal-700" },
-    { currency: "BTC", rate: "$27,066.60", color: "teal-700" },
-    { currency: "LTC", rate: "$120.50", color: "blue-500" },
-    { currency: "XRP", rate: "$0.75", color: "purple-500" },
-    { currency: "ADA", rate: "$1.20", color: "pink-500" },
-    { currency: "DOGE", rate: "$0.15", color: "yellow-500" },
+    {
+      type: "Exchange Rate",
+      currency: "1 ETH",
+      rate: "$1,865.36",
+      color: "teal-700",
+      currency2: "1 BTC",
+      rate2: "$27,066.60",
+      color2: "teal-700",
+    },
+    {
+      type: "Monthly Rate",
+      currency: "BTC",
+      rate: "$27,066.60",
+      color: "teal-700",
+      currency2: "HIGH",
+      rate2: "$27,066.60",
+      color2: "teal-700",
+    },
+    {
+      type: "Private Sales",
+      currency: "1 BTC",
+      rate: "$27,066.60",
+      color: "teal-700",
+      currency2: "Bonus",
+      rate2: "65% (1.10)",
+      color2: "teal-700",
+    },
+    {
+      type: "Public Sales",
+      currency: "1 BTC",
+      rate: "$27,066.60",
+      color: "teal-700",
+      currency2: "Bonus",
+      rate2: "65% (1.10)",
+      color2: "teal-700",
+    },
+    {
+      type: "Investors",
+      rate: "890,000.00",
+      currency2: "Ave. Invest($) ",
+      rate2: ": 1200",
+      color2: "teal-700",
+    },
+    {
+      type: "Pivot Points",
+      currency: "1 ETH",
+      rate: " $39000.00",
+      color: "teal-700",
+      currency2: "1 BTC",
+      rate2: "$120.00",
+      color2: "teal-700",
+    },
   ];
 
   const [plan, setPlan] = useState("basic");
@@ -271,44 +330,44 @@ export default function HomeHeroPage() {
   const reviews = [
     {
       image: dp1,
-      title: "Jason Whyatt",
+      title: "Amy Whyatt",
       description:
-        "Get a head start on growing your wealth with EliteBitx's early cash bonus offer - a limited-time opportunity to earn extra returns on your investment.",
-      lineColor: "orange", // Gradient starts with teal
+        "I've been investing with CoinLog for over a year now, and I'm extremely satisfied with their services. The team is knowledgeable, responsive, and always keeps me updated on the latest cryptocurrency trends. Thanks to their expertise, my investments have grown significantly!",
+      lineColor: "orange", 
     },
     {
       image: dp2,
-      title: "Michael Murphy",
+      title: "Michel Murphy",
       description:
-        "Enjoy peace of mind with EliteBitx's state-of-the-art security measures, ensuring your transactions and investments are always protected.",
-      lineColor: "teal", // Gradient starts with blue
+        "EliteBitx is the best cryptocurrency investment company I've come across. Their team of professionals guided me through the investment process, answered all my questions, and helped me make informed decisions. I've seen remarkable returns on my investments, and I highly recommend them to anyone looking to enter the world of cryptocurrencies.",
+      lineColor: "teal",
     },
     {
       image: dp3,
-      title: "Anya Wilson",
+      title: "Abraham Wilson",
       description:
-        "Stay informed with EliteBitx's transparent reporting system, providing real-time updates on your investment performance.",
-      lineColor: "#87CEEB", // Gradient starts with purple
+        "I can't thank CoinLog enough for their exceptional services. Their platform is user-friendly, their investment strategies are well-researched, and their customer support is top-notch. They genuinely care about their clients' success and go the extra mile to ensure we achieve our financial goals. I'm thrilled to be a part of the CoinLog community!",
+      lineColor: "#87CEEB",
     },
     {
       image: dp4,
       title: "Daniel Morris",
       description:
-        "EliteBitx offers some of the lowest fees in the industry, ensuring you keep more of your profits.",
-      lineColor: "purple", // Gradient starts with orange
+        "EliteBitx has revolutionized my approach to investing. With their expert advice and seamless platform, I've diversified my portfolio and gained exposure to a variety of cryptocurrencies. The team's transparency and dedication to delivering consistent results have earned my trust, and I'm excited to continue growing my investments with them.",
+      lineColor: "purple", 
     },
     {
       image: dp5,
       title: "Sophia Luther",
       description:
-        "Our dedicated support team is available around the clock to assist you with any questions or issues.",
+        "Choosing EliteBitx  was the best decision I made for my cryptocurrency investments. Their team possesses in-depth knowledge of the market, and they tailor their strategies to individual investors' goals. I've experienced significant growth in my portfolio, and I'm grateful for their guidance and support. I wholeheartedly recommend CoinLog to anyone seeking reliable and profitable cryptocurrency investments.",
       lineColor: "#87CEEB", // Gradient starts with pink
     },
     {
       image: dp6,
       title: "Jeff Botch",
       description:
-        "Access your investments from anywhere in the world with EliteBitx's globally available platform.",
+        "EliteBitx has provided me with an excellent investment experience. Their platform is intuitive, their investment options are diverse, and their team is professional and friendly. I've witnessed remarkable returns on my investments, and I appreciate the peace of mind that comes with knowing my assets are in capable hands. I couldn't be happier with their services!",
       lineColor: "#FF7F7F", // Gradient starts with green
     },
   ];
@@ -525,7 +584,7 @@ export default function HomeHeroPage() {
       <style>{floatingAnimations}</style>
       <ParticlesComponent />
       <section className="overflow-x-hidden" style={{ height: "100vh" }}>
-        <HeaderPage />
+        <HomeHeaderPage />
 
         <div
           className="flex flex-col md:flex-row items-center  gap-32 justify-between p-8 z-50 relative"
@@ -566,12 +625,12 @@ export default function HomeHeroPage() {
               anyone to get involved in the world of digital assets. Join us
               today and start growing your wealth.
             </h4>
-            <button className="bg-gray-600 bg-opacity-40 border-opacity-70 border-2 border-teal-300 text-white px-6 py-3 rounded-full mb-6 flex items-center justify-center md:justify-start gap-2 mx-auto md:mx-0 hover:bg-teal-300 hover:text-slate-900 hover:shadow-teal-300 hover:shadow-lg transition duration-300">
-              <FontAwesomeIcon icon={faPlay} />
+            <button className="bg-teal-600 font-semibold bg-opacity-20 border-opacity-70 border border-teal-800 text-white px-6 py-3 rounded-full mb-6 flex items-center justify-center md:justify-start gap-2 mx-auto md:mx-0 hover:bg-teal-300 hover:text-slate-900 hover:shadow-teal-300 hover:shadow-lg transition duration-300">
+              <FontAwesomeIcon className="h-4 bg-teal-600 p-1 rounded-full" icon={faBitcoin} />
               Start Trading
             </button>
-            <h3 className="text-xl md:text-2xl text-white flex items-center justify-center md:justify-start gap-2">
-              <FontAwesomeIcon className="text-teal-300 h-5" icon={faCheck} />
+            <h3 className="text-xl md:text-xl text-white flex items-center justify-center md:justify-start gap-2">
+              <FontAwesomeIcon className="text-white font-semibold h-3 bg-green-400 rounded-full p-1" icon={faCheck} />
               Available on Android & iOS Mobile Apps
             </h3>
           </div>
@@ -662,7 +721,7 @@ export default function HomeHeroPage() {
               located at C/O Vistra (BVI) Limited, Vistra Corporate Services
               Centre, Wickhams Cay II, Road Town, Tortola, VG1110.
             </p>
-            <button className="bg-gray-600 bg-opacity-40 border-opacity-70 border-2 border-teal-300 text-white px-6 py-3 rounded-full flex items-center justify-center gap-2 mx-auto md:mx-0 hover:bg-teal-300 hover:text-slate-900 hover:shadow-teal-300 hover:shadow-lg transition duration-300">
+            <button className="bg-gray-600 bg-opacity-40 border-opacity-70 border border-teal-300 text-white px-6 py-3 rounded-full flex items-center justify-center gap-2 mx-auto md:mx-0 hover:bg-teal-300 hover:text-slate-900 hover:shadow-teal-300 hover:shadow-lg transition duration-300">
               <FontAwesomeIcon icon={faBitcoin} />
               Read More
             </button>
@@ -689,7 +748,7 @@ export default function HomeHeroPage() {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="group bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="group bg-gray-900 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="flex flex-col items-center relative">
                   {/* Image Container */}
@@ -747,7 +806,7 @@ export default function HomeHeroPage() {
           </div>
         </div>
 
-        <div className=" bg-gray-900 p-10 z-50 relative">
+        <div className=" bg-gray-900 p-5 z-50 relative">
           <div className="text-center mb-12 ">
             <h1 className="text-teal-600 text-lg font-semibold mb-3">
               Token Sales
@@ -761,15 +820,19 @@ export default function HomeHeroPage() {
             </h4>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-6 p-6">
+          <div className="flex flex-col  md:flex-row gap-6 p-6">
             {/* Crypto Containers (3 rows, 2 columns) */}
-            <div className="grid grid-cols-2 gap-6 md:w-2/3">
+            <div className="grid  grid-cols-2 gap-6 md:w-2/3">
               {exchangeRates.map((item, index) => (
                 <ExchangeRateContainer
                   key={index}
+                  type={item.type}
                   currency={item.currency}
                   rate={item.rate}
                   color={item.color}
+                  currency2={item.currency2}
+                  rate2={item.rate2}
+                  color2={item.color2}
                 />
               ))}
             </div>
@@ -886,15 +949,15 @@ export default function HomeHeroPage() {
           {/* Background Image */}
           <div
             className="absolute inset-0 bg-cover bg-center opacity-90"
-            style={{ backgroundImage: `url(${px13})` }}
+            style={{ backgroundImage: `url(${moon1})` }}
           />
 
           {/* Section Title */}
-          <div className="relative z-10 mb-12 p-10">
-            <h1 className="text-3xl sm:text-4xl font-semibold">
+          <div className="relative z-10 mb-12 p-10 ">
+            <h1 className="text-3xl sm:text-5xl font-semibold top-5 relative ">
               Profit <span className="text-teal-600">Calculator</span>
             </h1>
-            <h4 className="text-gray-300 mt-3 text-sm sm:text-base">
+            <h4 className="text-slate-100 font-semibold top-12 relative text-lg ">
               You must know the calculation before investing in any plan, so you
               never make mistakes.
               <br /> Check the calculation and you will get as our calculator
@@ -905,7 +968,7 @@ export default function HomeHeroPage() {
           {/* Calculator Section */}
           <div className="relative z-10 flex flex-col items-center justify-center gap-10">
             {/* Video Background Container */}
-            <div className="relative w-full max-w-3xl rounded-md overflow-hidden shadow-2xl">
+            <div className="relative w-full max-w-3xl rounded-xl overflow-hidden shadow-2xl">
               {/* Video Background */}
               <video
                 autoPlay
@@ -918,7 +981,7 @@ export default function HomeHeroPage() {
               </video>
 
               {/* Calculator Content */}
-              <div className="relative z-10 bg-gray-900 bg-opacity-90 rounded-xl p-6 sm:p-8 lg:p-10 border border-teal-600 backdrop-blur-sm">
+              <div className="relative z-10 bg-gray-900 bg-opacity-90 rounded-xl p-6 sm:p-8 lg:p-10 border border-teal-900 backdrop-blur-sm">
                 {/* Plan & Investment Inputs */}
                 <div className="flex flex-col sm:flex-row justify-between gap-6 mb-8">
                   <div className="w-full sm:w-1/2">
@@ -967,7 +1030,7 @@ export default function HomeHeroPage() {
 
                 {/* Call-to-Action Button */}
                 <div>
-                  <button className="w-full bg-transparent text-teal-500 border-2 border-teal-600 py-3 px-6 rounded-full hover:bg-teal-600 hover:text-white hover:shadow-lg hover:shadow-teal-600/30 transition-all duration-300 font-semibold">
+                  <button className="w-full bg-transparent text-teal-500 border border-teal-600 py-3 px-6 rounded-full hover:bg-teal-600 hover:text-white hover:shadow-lg hover:shadow-teal-600/30 transition-all duration-300 font-semibold">
                     Start Investing Now
                   </button>
                 </div>
@@ -976,7 +1039,6 @@ export default function HomeHeroPage() {
           </div>
         </div>
 
-        <CryptocurrencyMarketWidget />
         <div className="bg-slate-950 py-12 px-8 md:px-16 relative z-10">
           {/* Heading Section */}
           <div className="text-center mb-12">
@@ -997,7 +1059,7 @@ export default function HomeHeroPage() {
             {reviews.map((review, index) => (
               <div
                 key={index}
-                className="group bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="group bg-gray-900 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="flex flex-col items-center relative">
                   {/* Image Container */}
@@ -1030,7 +1092,7 @@ export default function HomeHeroPage() {
 
                   {/* Title and Description */}
                   <h3
-                    className="text-white text-xl font-semibold mb-3 text-center transition-colors duration-300 group-hover:text-[${review.lineColor}]"
+                    className="text-white text-2xl font-semibold mb-3 text-center transition-colors duration-300 group-hover:text-[${review.lineColor}]"
                     style={{
                       // Dynamically set hover color using inline style
                       // Tailwind doesn't support dynamic values in classes, so we use inline styles
@@ -1039,7 +1101,7 @@ export default function HomeHeroPage() {
                   >
                     {review.title}
                   </h3>
-                  <p className="text-gray-400 text-center">
+                  <p className="text-gray-400 text-lg text-center">
                     {review.description}
                   </p>
                 </div>
@@ -1070,7 +1132,7 @@ export default function HomeHeroPage() {
             </h4>
           </div>
           <div className="text-white py-16 px-6 sm:px-10 md:px-16 lg:px-20">
-            <div className="max-w-7xl mx-auto">
+            <div className="mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Starter Plan */}
                 <div className="bg-gray-900 rounded-xl p-8 relative overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-800 hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105">
@@ -1123,7 +1185,7 @@ export default function HomeHeroPage() {
                       <span className="text-gray-600">Capital Back - Yes</span>
                     </li>
                   </ul>
-                  <button className="w-full bg-transparent text-teal-500 border-2 border-gray-800 py-3 px-6 rounded-full hover:bg-teal-500 hover:translate-y-2 hover:shadow-xl hover:text-white hover:shadow-white/50 transition-all duration-300 font-semibold">
+                  <button className="w-full bg-transparent text-teal-500 border border-gray-800 py-3 px-6 rounded-full hover:bg-teal-500 hover:translate-y-2 hover:shadow-xl hover:text-white hover:shadow-white/50 transition-all duration-300 font-semibold">
                     Purchase Now
                   </button>
                 </div>
@@ -1179,7 +1241,7 @@ export default function HomeHeroPage() {
                       <span className="text-gray-600">Capital back - Yes</span>
                     </li>
                   </ul>
-                  <button className="w-full bg-transparent text-teal-500 border-2 border-gray-800 py-3 px-6 rounded-full hover:bg-teal-500 hover:translate-y-2 hover:shadow-xl hover:text-white hover:shadow-white/50 transition-all duration-300 font-semibold">
+                  <button className="w-full bg-transparent text-teal-500 border border-gray-800 py-3 px-6 rounded-full hover:bg-teal-500 hover:translate-y-2 hover:shadow-xl hover:text-white hover:shadow-white/50 transition-all duration-300 font-semibold">
                     Purchase Now
                   </button>
                 </div>
@@ -1235,7 +1297,7 @@ export default function HomeHeroPage() {
                       <span className="text-gray-600">Capital Back - Yes</span>
                     </li>
                   </ul>
-                  <button className="w-full bg-transparent text-teal-500 border-2 border-gray-800 py-3 px-6 rounded-full hover:bg-teal-500 hover:translate-y-2 hover:shadow-xl hover:text-white hover:shadow-white/50 transition-all duration-300 font-semibold">
+                  <button className="w-full bg-transparent text-teal-500 border border-gray-800 py-3 px-6 rounded-full hover:bg-teal-500 hover:translate-y-2 hover:shadow-xl hover:text-white hover:shadow-white/50 transition-all duration-300 font-semibold">
                     Purchase Now
                   </button>
                 </div>
@@ -1299,6 +1361,7 @@ export default function HomeHeroPage() {
         </div>
 
         <ContactUs />
+        <FooterPage />
       </section>
     </>
   );
