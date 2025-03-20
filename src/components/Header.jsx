@@ -73,40 +73,34 @@ export default function HeaderPage() {
         </div>
       </nav>
 
-      {/* Sidebar */}
-      <div style={{height:"620px"}}
-        ref={sidebarRef} // Attach the ref to the sidebar
-        className={`fixed top-4 rounded-2xl left-0  w-64 border-4 border-teal-900 bg-slate-900 text-white z-50 transition-transform duration-200 ease-in-out shadow-lg ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <div className="p-4 h-full flex flex-col">
-          {/* Sidebar Header */}
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-2xl font-extrabold text-amber-600">
-              PR<span className="text-amber-400">IMEHUB</span>
-            </h1>
-            <FontAwesomeIcon
-              className="h-6 cursor-pointer"
-              icon={faBars}
-              onClick={() => setIsSidebarOpen(false)}
-              aria-label="Close Sidebar"
-            />
-          </div>
+    {/* Sidebar */}
+<div
+  ref={sidebarRef} // Attach the ref to the sidebar
+  className={`fixed top-0 rounded-2xl left-0 w-64 border-4 border-teal-900 bg-slate-900 text-white z-50 transition-transform duration-200 ease-in-out shadow-lg h-screen overflow-y-auto ${
+    isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+  }`}
+>
+  <div className="p-4 h-full flex flex-col">
+    {/* Sidebar Header */}
+    <div className="flex items-center justify-between mb-6">
+      <h1 className="text-2xl font-extrabold text-amber-600">
+        PR<span className="text-amber-400">IMEHUB</span>
+      </h1>
+      <FontAwesomeIcon
+        className="h-6 cursor-pointer"
+        icon={faBars}
+        onClick={() => setIsSidebarOpen(false)}
+        aria-label="Close Sidebar"
+      />
+    </div>
 
-          {/* Navigation Links - Show HeaderSidebar for Home, otherwise DashboardSidebar */}
-          <nav
-            className="space-y-4 overflow-y-auto flex-1 pr-2"
-            style={{ maxHeight: "calc(100vh - 100px)" }}
-          >
-            {location.pathname === "/" ? (
-              <HeaderSidebar />
-            ) : (
-              <DashboardSidebar />
-            )}
-          </nav>
-        </div>
-      </div>
+    {/* Navigation Links - Show HeaderSidebar for Home, otherwise DashboardSidebar */}
+    <nav className="space-y-4 overflow-y-auto flex-1 pr-2">
+      {location.pathname === "/" ? <HeaderSidebar /> : <DashboardSidebar />}
+    </nav>
+  </div>
+</div>
+      
     </>
   );
 }

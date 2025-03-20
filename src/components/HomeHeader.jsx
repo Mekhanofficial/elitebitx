@@ -57,9 +57,8 @@ export default function HomeHeaderPage() {
 
       {/* Sidebar */}
       <div
-        style={{ height: "620px" }}
         ref={sidebarRef} // Attach the ref to the sidebar
-        className={`fixed top-0 rounded-lg left-0  w-64 border-4 border-teal-900 bg-slate-900 text-white z-[100] transition-transform duration-200 ease-in-out shadow-lg ${
+        className={`fixed top-0 rounded-lg left-0  w-64 border-4 h-screen border-teal-900 bg-slate-900 text-white z-[100] transition-transform duration-200 ease-in-out shadow-lg ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

@@ -224,18 +224,22 @@ const ProjectDetail = ({ project, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center p-4">
-      <div className="bg-slate-800 p-8 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto">
+      <div className="bg-slate-800 p-6 sm:p-8 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto">
         <img
           src={project.image}
           alt={project.name}
-          className="w-full h-64 object-cover rounded-lg mb-4"
+          className="w-full h-48 sm:h-64 object-cover rounded-lg mb-4"
         />
-        <h2 className="text-3xl font-bold text-white mb-6">{project.name}</h2>
-        <p className="text-gray-400 mb-6 text-lg">{project.profitRate}</p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+          {project.name}
+        </h2>
+        <p className="text-gray-400 mb-4 sm:mb-6 text-lg">
+          {project.profitRate}
+        </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           <div>
-            <div className="text-md font-semibold flex items-center gap-4 text-white mb-4">
+            <div className="text-md font-semibold flex flex-wrap gap-4 text-white mb-4">
               <button
                 onClick={() => setView("property")}
                 className={`p-2 rounded-lg ${
@@ -259,27 +263,13 @@ const ProjectDetail = ({ project, onClose }) => {
                 <p className="text-gray-400 mb-4">
                   {details.propertyDescription}
                 </p>
-
                 {details.whyProperty.length > 0 && (
                   <>
-                    <h3 className="text-xl font-semibold text-white mb-4">
+                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-4">
                       Why This Property:
                     </h3>
                     <ul className="list-disc list-inside text-gray-400 mb-4">
                       {details.whyProperty.map((point, index) => (
-                        <li key={index}>{point}</li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-
-                {details.whySponsor.length > 0 && (
-                  <>
-                    <h3 className="text-xl font-semibold text-white mb-4">
-                      Why This Sponsor:
-                    </h3>
-                    <ul className="list-disc list-inside text-gray-400 mb-4">
-                      {details.whySponsor.map((point, index) => (
                         <li key={index}>{point}</li>
                       ))}
                     </ul>
@@ -291,7 +281,7 @@ const ProjectDetail = ({ project, onClose }) => {
                 <p className="text-gray-400 mb-4">
                   {details.documentDescription}
                 </p>
-                <div className="flex flex-col gap-4 ">
+                <div className="flex flex-col gap-4">
                   {details.documents.map((doc, index) => (
                     <a
                       key={index}
@@ -301,10 +291,9 @@ const ProjectDetail = ({ project, onClose }) => {
                       className="flex items-center gap-2 text-teal-400 hover:text-teal-200"
                     >
                       <FontAwesomeIcon
-                        className="h-6 cursor-pointer text-teal-600"
+                        className="h-6 text-teal-600"
                         icon={faFileAlt}
                       />
-
                       <span>{doc.name}</span>
                     </a>
                   ))}
@@ -314,62 +303,62 @@ const ProjectDetail = ({ project, onClose }) => {
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold text-white mb-4">
+            <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">
               Project Breakdown
             </h3>
-            <div className="bg-slate-700 p-4 rounded-lg">
-              <table className="w-full border-collapse border border-slate-500">
+            <div className="bg-slate-700 p-4 rounded-lg overflow-x-auto">
+              <table className="w-full border-collapse border border-slate-500 text-sm sm:text-base">
                 <thead>
                   <tr className="bg-slate-800">
-                    <th className="text-gray-400 text-left p-3 border border-slate-600">
+                    <th className="text-gray-400 text-left p-2 sm:p-3 border border-slate-600">
                       Type
                     </th>
-                    <th className="text-gray-400 text-left p-3 border border-slate-600">
+                    <th className="text-gray-400 text-left p-2 sm:p-3 border border-slate-600">
                       ACRES
                     </th>
-                    <th className="text-gray-400 text-left p-3 border border-slate-600">
+                    <th className="text-gray-400 text-left p-2 sm:p-3 border border-slate-600">
                       STRATEGY
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="text-white p-3 border border-slate-600">
+                    <td className="text-white p-2 sm:p-3 border border-slate-600">
                       {details.type}
                     </td>
-                    <td className="text-white p-3 border border-slate-600">
+                    <td className="text-white p-2 sm:p-3 border border-slate-600">
                       {details.acres}
                     </td>
-                    <td className="text-white p-3 border border-slate-600">
+                    <td className="text-white p-2 sm:p-3 border border-slate-600">
                       {details.strategy}
                     </td>
                   </tr>
                 </tbody>
               </table>
 
-              <table className="w-full border-collapse border border-slate-500 mt-4">
+              <table className="w-full border-collapse border border-slate-500 mt-4 text-sm sm:text-base">
                 <thead>
                   <tr className="bg-slate-800">
-                    <th className="text-gray-400 text-left p-3 border border-slate-600">
+                    <th className="text-gray-400 text-left p-2 sm:p-3 border border-slate-600">
                       OBJECTIVE
                     </th>
-                    <th className="text-gray-400 text-left p-3 border border-slate-600">
+                    <th className="text-gray-400 text-left p-2 sm:p-3 border border-slate-600">
                       MINIMUM
                     </th>
-                    <th className="text-gray-400 text-left p-3 border border-slate-600">
+                    <th className="text-gray-400 text-left p-2 sm:p-3 border border-slate-600">
                       ROI
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="text-white p-3 border border-slate-600">
+                    <td className="text-white p-2 sm:p-3 border border-slate-600">
                       {details.objective}
                     </td>
-                    <td className="text-white p-3 border border-slate-600">
+                    <td className="text-white p-2 sm:p-3 border border-slate-600">
                       {details.minimum}
                     </td>
-                    <td className="text-white p-3 border border-slate-600">
+                    <td className="text-white p-2 sm:p-3 border border-slate-600">
                       {details.roi}
                     </td>
                   </tr>
@@ -377,32 +366,32 @@ const ProjectDetail = ({ project, onClose }) => {
               </table>
             </div>
 
-            <h3 className="text-xl font-semibold text-white mt-6 mb-4">
+            <h3 className="text-lg sm:text-xl font-semibold text-white mt-6 mb-4">
               Calculate your ROI
             </h3>
             <p className="text-gray-400 mb-4">
               You could earn up to {details.roi} on {details.minimum}
             </p>
-            <div className="bg-slate-900 p-4 rounded-lg justify-center grid">
-              <div className=" gap-4">
-                <p className="text-gray-400 mb-2">Amount:</p>
-                <button className="bg-slate-950 flex items-center justify-between rounded-lg my-4 w-96 text-left font-semibold text-gray-600 p-2">
-                  {details.value}
-                  <h2 className="bg-teal-800 text-slate-900 font-semibold p-1 rounded-md">
-                    USD
-                  </h2>
-                </button>
-                <select className="bg-slate-950 flex items-center justify-between rounded-lg my-4 w-96 text-left font-semibold text-gray-600 p-2">
-                  Duration(Days):
-                  <option>3 Days</option>
-                  <option>5 Days</option>
-                  <option>7 Days</option>
-                  <option>30 Days</option>
-                </select>
-                <button className="w-96 bg-teal-600 text-white px-4 py-2 rounded-lg">
-                  Invest
-                </button>
+            <div className="bg-slate-900 p-4 rounded-lg">
+              <label className="text-gray-400 block mb-2">Amount:</label>
+              <div className="flex items-center bg-slate-950 p-2 rounded-lg text-gray-600 font-semibold">
+                {details.value}
+                <span className="ml-auto bg-teal-800 text-slate-900 font-semibold px-2 py-1 rounded-md">
+                  USD
+                </span>
               </div>
+              <label className="text-gray-400 block mt-4 mb-2">
+                Duration (Days):
+              </label>
+              <select className="w-full bg-slate-950 p-2 rounded-lg text-gray-600 font-semibold">
+                <option>3 Days</option>
+                <option>5 Days</option>
+                <option>7 Days</option>
+                <option>30 Days</option>
+              </select>
+              <button className="w-full bg-teal-600 text-white px-4 py-2 rounded-lg mt-4">
+                Invest
+              </button>
             </div>
           </div>
         </div>
