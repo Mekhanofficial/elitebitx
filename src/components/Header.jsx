@@ -88,7 +88,7 @@ export default function HeaderPage() {
         {/* Right Side */}
         <div className="flex gap-5 items-center">
           <FontAwesomeIcon className="h-4 cursor-pointer" icon={faSun} />
-          <Link to="/Dashboard">
+          <Link to="/Account">
             <FontAwesomeIcon className="h-4 cursor-pointer" icon={faUser} />
           </Link>
         </div>
@@ -98,7 +98,7 @@ export default function HeaderPage() {
       <div
         ref={sidebarRef} // Attach the ref to the sidebar
         className={`fixed top-0 rounded-2xl left-0 w-64 border-4 border-teal-900 bg-slate-900 text-white z-50 transition-transform duration-200 ease-in-out shadow-lg h-screen overflow-y-auto ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full hidden"
         }`}
       >
         <div className="p-4 h-full flex flex-col">

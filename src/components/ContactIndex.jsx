@@ -1,8 +1,8 @@
 
 import React from "react";
-import SideImg from "../components/ContactImg";
-import Input from "../components/Input";
-import Button from "../components/Buttons";
+import SideImg from "./ContactImg";
+import Input from "./Input";
+import Button from "./Buttons";
 
 const ContactUs = () => {
   return (

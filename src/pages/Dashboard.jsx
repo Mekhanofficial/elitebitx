@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faBitcoin } from "@fortawesome/free-brands-svg-icons";
 import HeaderPage from "../components/Header";
+import { auth } from "../../firebase";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
 
 // Simulated trading data with ups and downs
@@ -56,6 +57,18 @@ export default function DashPage() {
 
   const [cryptoData, setCryptoData] = useState([]);
 
+
+
+  const [user, setUser] = useState({ name: ""});
+    useEffect(() => {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        setUser({
+          name: currentUser.displayName || "User",
+        });
+      }
+    }, []);
+  
   useEffect(() => {
     const fetchCryptoData = async () => {
       try {
@@ -100,7 +113,7 @@ export default function DashPage() {
           {/* Welcome Card */}
           <div className="bg-gradient-to-r from-teal-700 to-teal-950 border-2 border-slate-700 rounded-lg p-4 lg:p-6 mb-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
             <h1 className="text-xl lg:text-2xl font-bold mb-2">
-              Welcome to EliteBitx!
+              Welcome {user.name} to EliteBitx!
             </h1>
             <p className="text-sm lg:text-base text-gray-300 mb-4">
               Your gateway to the exciting world of cryptocurrency trading.

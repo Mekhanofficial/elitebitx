@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../../../firebase/firebase-config";
+import { auth, db } from "../../../../firebase";
+import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import countryData from "./CountryData.json";
 import Button from "../../Button";
@@ -22,6 +23,7 @@ const SignUpPage = () => {
   });
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     if (formData.country) {
@@ -40,6 +42,19 @@ const SignUpPage = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError(null);
+  };
+
+  const validateForm = () => {
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return false;
+    }
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return false;
+    }
+    return true;
   };
 
   const handleSubmit = async (e) => {
@@ -47,8 +62,7 @@ const SignUpPage = () => {
     setError(null);
     setIsLoading(true);
 
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match.");
+    if (!validateForm()) {
       setIsLoading(false);
       return;
     }
@@ -59,17 +73,48 @@ const SignUpPage = () => {
         formData.email,
         formData.password
       );
+      
+      // Only save the specified fields to Firestore
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        sex: formData.sex,
+        country: formData.country,
+        currencyCode: formData.currencyCode,
+        currencySymbol: formData.currencySymbol,
+        createdAt: new Date().toISOString(),
+      });
+
       await updateProfile(userCredential.user, {
         displayName: `${formData.firstName} ${formData.lastName}`,
       });
-      navigate("/dashboard");
+
+      setShowSuccess(true);
+      setTimeout(() => navigate("/loginpage"), 2000);
     } catch (err) {
-      setError(err.message);
+      let errorMessage = "Sign up failed. Please try again.";
+      
+      switch (err.code) {
+        case "auth/email-already-in-use":
+          errorMessage = "This email is already registered. Try logging in instead.";
+          break;
+        case "auth/invalid-email":
+          errorMessage = "Please enter a valid email address.";
+          break;
+        case "auth/weak-password":
+          errorMessage = "Password should be at least 6 characters.";
+          break;
+        default:
+          errorMessage = err.message.replace("Firebase: ", "");
+      }
+
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-orange-500">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-2xl shadow-lg">

@@ -10,25 +10,44 @@ import {
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import HeaderPage from "../components/Header";
+import { auth } from "../../firebase";
+import { signOut } from "firebase/auth";
 
 export default function AccountPage() {
   const [user, setUser] = useState({ name: "", email: "" });
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const registeredUser = JSON.parse(
-      localStorage.getItem("registeredUser")
-    ) || {
-      name: "User",
-      email: "user@example.com",
-    };
-    setUser(registeredUser);
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      setUser({
+        name: currentUser.displayName || "User",
+        email: currentUser.email || "user@example.com"
+      });
+    }
   }, []);
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    try {
+      await signOut(auth);
+      navigate("/LoginPage");
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      setIsLoggingOut(false);
+      setShowLogoutModal(false);
+    }
+  };
 
   return (
     <>
       <HeaderPage />
-      <div className="bg-gradient-to-b from-slate-950 to-slate-900 min-h-screen flex flex-col items-center p-6 text-white">
+      <div className="bg-gradient-to-b from-slate-950 to-slate-900 min-h-screen flex flex-col items-center p-6 text-white relative">
         {/* Profile Section */}
         <div className="flex flex-col items-center mb-8 text-center">
           <div className="w-32 h-32 bg-slate-800 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-slate-700 hover:border-teal-500">
@@ -48,63 +67,124 @@ export default function AccountPage() {
             text="Referrals"
             iconColor="text-teal-400"
             bgColor="bg-slate-800"
+            onClick={() => navigate("/referrals")}
           />
           <Button
             icon={faSignOutAlt}
             text="Logout"
             iconColor="text-red-400"
             bgColor="bg-slate-800"
+            onClick={() => setShowLogoutModal(true)}
           />
           <Button
             icon={faStar}
             text="Watch List"
             iconColor="text-yellow-400"
             bgColor="bg-slate-800"
+            onClick={() => navigate("/watchlist")}
           />
           <Button
             icon={faEnvelope}
             text="Update Email"
             iconColor="text-blue-400"
             bgColor="bg-slate-800"
+            onClick={() => navigate("/update-email")}
           />
           <Button
             icon={faMoneyBill}
             text="Withdrawals"
             iconColor="text-green-400"
             bgColor="bg-slate-800"
+            onClick={() => navigate("/withdrawals")}
           />
           <Button
             icon={faImage}
             text="Update Photo"
             iconColor="text-pink-400"
             bgColor="bg-slate-800"
+            onClick={() => navigate("/update-photo")}
           />
           <Button
             icon={faLock}
             text="Update Password"
             iconColor="text-purple-400"
             bgColor="bg-slate-800"
+            onClick={() => navigate("/update-password")}
           />
           <Button
             icon={faCog}
             text="Account Settings"
             iconColor="text-orange-400"
             bgColor="bg-slate-800"
+            onClick={() => navigate("/account-settings")}
           />
         </div>
+
+        {/* Logout Confirmation Modal */}
+        {showLogoutModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+            <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 w-full max-w-md shadow-2xl animate-fade-in">
+              <div className="flex items-center gap-3 mb-4">
+                <FontAwesomeIcon 
+                  icon={faSignOutAlt} 
+                  className="text-red-500 text-xl" 
+                />
+                <h3 className="text-xl font-bold text-white">Confirm Logout</h3>
+              </div>
+              <p className="text-slate-300 mb-6">
+                You'll need to sign in again to access your account.
+              </p>
+              
+              <div className="flex gap-3 justify-end">
+                <button
+                  onClick={() => setShowLogoutModal(false)}
+                  disabled={isLoggingOut}
+                  className="px-4 py-2 rounded-lg border border-slate-600 text-white hover:bg-slate-700 transition-colors disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleLogout}
+                  disabled={isLoggingOut}
+                  className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors flex items-center gap-2 disabled:opacity-50"
+                >
+                  {isLoggingOut ? (
+                    <>
+                      <svg 
+                        className="animate-spin h-4 w-4 text-white" 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        fill="none" 
+                        viewBox="0 0 24 24"
+                      >
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Logging Out...
+                    </>
+                  ) : (
+                    <>
+                      <FontAwesomeIcon icon={faSignOutAlt} />
+                      Log Out
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
 }
 
-function Button({ icon, text, iconColor, bgColor }) {
+function Button({ icon, text, iconColor, bgColor, onClick }) {
   return (
     <button
-      className={`flex items-center p-5 w-full rounded-lg ${bgColor} text-white text-left shadow-md transition-all transform hover:scale-105 hover:shadow-2xl hover:brightness-110 sm:text-base text-sm   duration-300 border border-gray-800 hover:border-teal-500 hover:shadow-teal-500/50 `}
+      onClick={onClick}
+      className={`flex items-center p-5 w-full rounded-lg ${bgColor} text-white text-left shadow-md transition-all transform hover:scale-105 hover:shadow-2xl hover:brightness-110 sm:text-base text-sm duration-300 border border-gray-800 hover:border-teal-500 hover:shadow-teal-500/50`}
     >
-      <FontAwesomeIcon icon={icon} className={`text-lg mr-3 ${iconColor}`} />{" "}
+      <FontAwesomeIcon icon={icon} className={`text-lg mr-3 ${iconColor}`} />
       {text}
     </button>
   );
 }
- 

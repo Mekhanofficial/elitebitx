@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import HomePage from "./pages/Home";
+import HomePage from "./pages/Home.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ParticlesComponent from "./components/ParticlesBackground.jsx";
 import "slick-carousel/slick/slick.css";
@@ -41,7 +41,7 @@ import Modal from "./pages/Modal.jsx";
 import ProjectDetail from "./pages/RealEstatedetails.jsx";
 import PlaceTradePage from "./pages/PlaceTrade.jsx";
 import AssetPage from "./pages/Assets.jsx";
-
+import { PrivateRoute } from "./PrivateRoute.jsx";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -52,16 +52,107 @@ const proRouter = createBrowserRouter([
     element: <HomePage />,
   },
   {
+    path: "/LoginPage",
+    element: <LoginPage />,
+  },
+  {
+    path: "/SignUpPage",
+    element: <SignUpPage />,
+  },
+  // Protected routes
+  {
+    element: <PrivateRoute />,
+    children: [
+      {
+        path: "/Dashboard",
+        element: <DashPage />,
+      },
+      {
+        path: "/Assets",
+        element: <AssetPage />,
+      },
+      {
+        path: "/PlaceTrade",
+        element: <PlaceTradePage/>,
+      },
+      {
+        path: "/Mining",
+        element: <MiningPage />,
+      },
+      {
+        path: "/Deposits",
+        element: <DepositPage />,
+      },
+      {
+        path: "/MyTraders",
+        element: <MyTraderPage />,
+      },
+      {
+        path: "/BuyCrypto",
+        element: <BuyCrypto />,
+      },
+      {
+        path: "/Account",
+        element: <AccountPage />,
+      },
+      {
+        path: "/Referrals",
+        element: <ReferralsPage />,
+      },
+      {
+        path: "/EmailUpdate",
+        element: <EmailUpdatePage />,
+      },
+      {
+        path: "/PasswordUpdate",
+        element: <PasswordUpdatePage />,
+      },
+      {
+        path: "/PhotoUpdate",
+        element: <PhotoUpdatePage />,
+      },
+      {
+        path: "/Transactions",
+        element: <TransactionPage />,
+      },
+      {
+        path: "/PaymentProof",
+        element: <PaymentProofPage />,
+      },
+      {
+        path: "/Withdrawal",
+        element: <WithdrawalPage />,
+      },
+      {
+        path: "/TradesRoi",
+        element: <TradesRoiPage />,
+      },
+      {
+        path: "/MyCopytraders",
+        element: <MycopyTradersPage />,
+      },
+      {
+        path: "/BuyBots",
+        element: <BuyBotPage />,
+      },
+      {
+        path: "/Stake",
+        element: <StakePage />,
+      },
+      {
+        path: "/Subscription",
+        element: <SubscriptionPage />,
+      },
+      {
+        path: "/DailySignal",
+        element: <DailySignalPage />,
+      },
+    ]
+  },
+  // Public routes
+  {
     path: "/ContactIndex",
     element: <ContactUs />,
-  },
-  {
-    path: "/Subscription",
-    element: <SubscriptionPage />,
-  },
-  {
-    path: "/DailySignal",
-    element: <DailySignalPage />,
   },
   {
     path: "/RealEstate",
@@ -88,34 +179,6 @@ const proRouter = createBrowserRouter([
     element: <TradingViewChart />,
   },
   {
-    path: "/TradesRoi",
-    element: <TradesRoiPage />,
-  },
-  {
-    path: "/MyCopytraders",
-    element: <MycopyTradersPage />,
-  },
-  {
-    path: "/BuyBots",
-    element: <BuyBotPage />,
-  },
-  {
-    path: "/Stake",
-    element: <StakePage />,
-  },
-  {
-    path: "/Transactions",
-    element: <TransactionPage />,
-  },
-  {
-    path: "/PaymentProof",
-    element: <PaymentProofPage />,
-  },
-  {
-    path: "/Withdrawal",
-    element: <WithdrawalPage />,
-  },
-  {
     path: "/CryptocurrencyMarketWidget",
     element: <CryptocurrencyMarketWidget />,
   },
@@ -126,66 +189,6 @@ const proRouter = createBrowserRouter([
   {
     path: "/ContactImg",
     element: <SideImg />,
-  },
-  {
-    path: "/LoginPage",
-    element: <LoginPage />,
-  },
-  {
-    path: "/SignUpPage",
-    element: <SignUpPage />,
-  },
-  {
-    path: "/useSignUP",
-    element: <SignUpPage />,
-  },
-  {
-    path: "/Dashboard",
-    element: <DashPage />,
-  },
-  {
-    path: "/Assets",
-    element: <AssetPage />,
-  },
-  {
-    path: "/PlaceTrade",
-    element: <PlaceTradePage/>,
-  },
-  {
-    path: "/Mining",
-    element: <MiningPage />,
-  },
-  {
-    path: "/Deposits",
-    element: <DepositPage />,
-  },
-  {
-    path: "/MyTraders",
-    element: <MyTraderPage />,
-  },
-  {
-    path: "/BuyCrypto",
-    element: <BuyCrypto />,
-  },
-  {
-    path: "/Account",
-    element: <AccountPage />,
-  },
-  {
-    path: "/Referrals",
-    element: <ReferralsPage />,
-  },
-  {
-    path: "/EmailUpdate",
-    element: <EmailUpdatePage />,
-  },
-  {
-    path: "/PasswordUpdate",
-    element: <PasswordUpdatePage />,
-  },
-  {
-    path: "/PhotoUpdate",
-    element: <PhotoUpdatePage />,
   },
 ]);
 
