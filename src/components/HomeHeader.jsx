@@ -49,7 +49,7 @@ export default function HomeHeaderPage() {
         {/* Desktop: Sign-in button right */}
         <div className="hidden lg:flex items-center gap-5">
           <Link to="/Dashboard">
-            <button className="bg-teal-300 font-semibold bg-opacity-20 border-opacity-70 border border-teal-800 text-white px-6 py-3 rounded-full flex items-center justify-center gap-2 hover:bg-teal-300 hover:text-slate-900 hover:shadow-teal-300 hover:shadow-lg transition duration-300">
+            <button className="bg-teal-300 font-semibold bg-opacity-20 border-opacity-70 border border-teal-800 text-white px-6 py-3 rounded-full flex items-center justify-center gap-2 hover:bg-teal-300 hover:text-slate-900 hover:shadow-teal-300 z-100 hover:shadow-lg transition duration-300">
               <FontAwesomeIcon className="h-3 cursor-pointer" icon={faUser} />
               <h2>Sign in</h2>
             </button>

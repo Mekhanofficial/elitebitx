@@ -1,6 +1,5 @@
 import { useState } from "react";
 import traderImages from "./MyTradersImg"; // Import the images
-import HeaderPage from "../components/Header";
 
 const names = [
   "Lisa Dawson",
