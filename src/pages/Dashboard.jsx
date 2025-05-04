@@ -119,7 +119,7 @@ export default function DashPage() {
               theme === "dark"
                 ? "from-teal-700 to-teal-950"
                 : "from-teal-500 to-teal-700"
-            } border-2 ${borderColor} rounded-lg p-4 lg:p-6 mb-6 shadow-lg hover:shadow-xl transition-shadow duration-300`}
+            } border-2 ${borderColor} rounded-lg p-4 lg:p-6 mb-6 shadow-lg hover:shadow-xl transition-shadow duration-300 hidden lg:block`}
           >
             <h1 className="text-xl lg:text-2xl font-bold mb-2">
               Welcome{" "}
@@ -194,7 +194,7 @@ export default function DashPage() {
                       className={`h-5 lg:h-6 ${action.color}`}
                     />
                   </div>
-                  <h3 className="text-xs lg:text-sm font-semibold">
+                  <h3 className="text-xs font-bold dark:text-teal-500 text-teal-800">
                     {action.label}
                   </h3>
                 </div>
