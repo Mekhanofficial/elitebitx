@@ -37,13 +37,11 @@ const LayoutContent = ({ children, user, isSidebarOpen, setIsSidebarOpen }) => {
           setIsSidebarOpen={setIsSidebarOpen}
         />
 
-        {/* Main Content Area */}
         <div className="flex-1 flex flex-col">
-          {/* Header - fixed width accounting for sidebar */}
           <div
             className={`fixed top-0 h-16 z-30 ${
-              isSidebarOpen ? "left-64" : "left-16"
-            } right-0 ${
+              isSidebarOpen ? "md:left-64" : "md:left-16"
+            } left-0 right-0 ${
               theme === "dark" ? "bg-zinc-950" : "bg-gray-50"
             } border-b ${
               theme === "dark" ? "border-slate-700" : "border-gray-200"
@@ -56,10 +54,9 @@ const LayoutContent = ({ children, user, isSidebarOpen, setIsSidebarOpen }) => {
             />
           </div>
 
-          {/* Main content - fills remaining space */}
           <main
             className={`flex-1 mt-8 pb-5 ${
-              isSidebarOpen ? "ml-64" : "ml-8"
+              isSidebarOpen ? "md:ml-64" : "md:ml-8"
             } transition-all duration-200 ${
               theme === "dark" ? "bg-zinc-950" : "bg-gray-50"
             }`}

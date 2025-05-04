@@ -11,6 +11,7 @@ import {
   faCog,
   faSignOutAlt,
   faEnvelope,
+  faLightbulb,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useRef, useEffect } from "react";
 
@@ -22,7 +23,6 @@ export default function HeaderPage({ isSidebarOpen, setIsSidebarOpen, user }) {
   const userMenuRef = useRef(null);
   const notificationMenuRef = useRef(null);
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
@@ -82,7 +82,6 @@ export default function HeaderPage({ isSidebarOpen, setIsSidebarOpen, user }) {
 
   const currentPage = findCurrentPage(location.pathname);
 
-  // Mock notifications data
   const notifications = [
     {
       id: 1,
@@ -109,10 +108,20 @@ export default function HeaderPage({ isSidebarOpen, setIsSidebarOpen, user }) {
   return (
     <header
       className={`fixed top-0 left-0 right-0 h-16 z-30 w-full bg-white dark:bg-slate-950 border-b border-gray-200 dark:border-slate-700 transition-all duration-200 ${
-        isSidebarOpen ? "pl-64" : "pl-16"
-      } pr-4 flex justify-between items-center text-gray-900 dark:text-white`}
+        isSidebarOpen ? "md:pl-64" : "md:pl-16"
+      } pl-0 pr-4 flex justify-between items-center text-gray-900 dark:text-white`}
     >
       <div className="flex items-center">
+        <button
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          className="md:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-slate-800 transition-colors duration-200 mr-2"
+          aria-label="Toggle sidebar"
+        >
+          <FontAwesomeIcon
+            icon={faBars}
+            className="h-5 w-5 text-gray-700 dark:text-gray-300"
+          />
+        </button>
         {currentPage && (
           <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white ml-4 md:ml-6">
             {currentPage}
@@ -121,19 +130,17 @@ export default function HeaderPage({ isSidebarOpen, setIsSidebarOpen, user }) {
       </div>
 
       <div className="flex gap-5 items-center">
-        {/* Theme Toggle */}
         <button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-slate-800 transition-colors duration-200"
           aria-label="Toggle theme"
         >
           <FontAwesomeIcon
-            icon={theme === "dark" ? faSun : faMoon}
-            className="h-4 w-4 text-amber-500 dark:text-amber-400"
+            icon={theme === "dark" ? faLightbulb : faMoon}
+            className="h-5 w-5 text-amber-500 dark:text-amber-400"
           />
         </button>
 
-        {/* Notifications */}
         <div className="relative" ref={notificationMenuRef}>
           <button
             onClick={() => {
@@ -154,7 +161,6 @@ export default function HeaderPage({ isSidebarOpen, setIsSidebarOpen, user }) {
             )}
           </button>
 
-          {/* Notifications Dropdown */}
           {isNotificationMenuOpen && (
             <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-800 rounded-md shadow-lg overflow-hidden z-50 border border-gray-200 dark:border-slate-700">
               <div className="py-1">
@@ -201,7 +207,6 @@ export default function HeaderPage({ isSidebarOpen, setIsSidebarOpen, user }) {
           )}
         </div>
 
-        {/* User Menu */}
         <div className="relative" ref={userMenuRef}>
           <button
             onClick={() => {
@@ -222,7 +227,6 @@ export default function HeaderPage({ isSidebarOpen, setIsSidebarOpen, user }) {
             </span>
           </button>
 
-          {/* User Dropdown Menu */}
           {isUserMenuOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-md shadow-lg overflow-hidden z-50 border border-gray-200 dark:border-slate-700">
               <div className="py-1">
