@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { useParams } from "react-router-dom";
-import HeaderPage from "../components/Header";
 import axios from "axios";
 
 // Helper functions

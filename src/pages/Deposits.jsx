@@ -8,7 +8,6 @@ import qr3 from "../pictures/qr1.png";
 import qr4 from "../pictures/qr1.png";
 import qr5 from "../pictures/qr1.png";
 import qr6 from "../pictures/qr1.png";
-import HeaderPage from "../components/Header";
 
 export default function DepositPage() {
   const { theme } = useTheme();
@@ -48,7 +47,6 @@ export default function DepositPage() {
 
   return (
     <>
-      <HeaderPage />
       <section
         className={`min-h-screen p-6 flex flex-col md:flex-row gap-6 ${
           theme === "dark"
