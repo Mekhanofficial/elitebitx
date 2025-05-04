@@ -1,9 +1,7 @@
-import HeaderPage from "../components/Header";
 
 export default function PaymentProofPage() {
   return (
     <>
-      <HeaderPage />
       <section className="bg-slate-950 min-h-screen flex flex-col items-center p-4 md:p-10">
         {/* Payment Proof Form */}
         <div className="bg-slate-900 p-6 md:p-8 rounded-xl shadow-lg max-w-md lg:max-w-lg w-full mt-10">

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import ParticlesComponent from "../../components/ParticlesBackground.jsx";
 import px1 from "../../pictures/px1.png";
 import px2 from "../../pictures/px2.png";
@@ -625,10 +627,13 @@ export default function HomeHeroPage() {
               anyone to get involved in the world of digital assets. Join us
               today and start growing your wealth.
             </h4>
+                      <Link to="/Dashboard">
+            
             <button className="bg-teal-600 font-semibold bg-opacity-20 border-opacity-70 border border-teal-800 text-white px-6 py-3 rounded-full mb-6 flex items-center justify-center md:justify-start gap-2 mx-auto md:mx-0 hover:bg-teal-300 hover:text-slate-900 hover:shadow-teal-300 hover:shadow-lg transition duration-300">
               <FontAwesomeIcon className="h-4 bg-teal-600 p-1 rounded-full" icon={faBitcoin} />
               Start Trading
             </button>
+            </Link>
             <h3 className="text-xl md:text-xl text-white flex items-center justify-center md:justify-start gap-2">
               <FontAwesomeIcon className="text-white font-semibold h-3 bg-green-400 rounded-full p-1" icon={faCheck} />
               Available on Android & iOS Mobile Apps
