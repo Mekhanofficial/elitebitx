@@ -232,6 +232,22 @@ const proRouter = createBrowserRouter([
           </Layout>
         ),
       },
+      {
+        path: "/RealEstate",
+        element: (
+          <Layout>
+            <RealestPage />
+          </Layout>
+        ),
+      },
+      {
+        path: "/VerifyAccount",
+        element: (
+          <Layout>
+            <VerifyAccountPage />
+          </Layout>
+        ),
+      },
     ],
   },
   // Public routes (remain unchanged)
@@ -240,20 +256,12 @@ const proRouter = createBrowserRouter([
     element: <ContactUs />,
   },
   {
-    path: "/RealEstate",
-    element: <RealestPage />,
-  },
-  {
     path: "/RealEstateDetails",
     element: <ProjectDetail />,
   },
   {
     path: "/Modal",
     element: <Modal />,
-  },
-  {
-    path: "/VerifyAccount",
-    element: <VerifyAccountPage />,
   },
   {
     path: "/ParticleBackground",

@@ -1,15 +1,26 @@
 import { useState } from "react";
+import { useTheme } from "next-themes";
 import HeaderPage from "../components/Header";
 
-// Custom Alert Component
+// Custom Alert Component with theme support
 const CustomAlert = ({ message, onClose }) => {
+  const { theme } = useTheme();
+  
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-slate-950 p-6 rounded-lg shadow-lg border border-slate-700 max-w-md w-full">
-        <p className="text-gray-200">{message}</p>
+      <div className={`p-6 rounded-lg shadow-lg border max-w-md w-full ${
+        theme === 'dark' 
+          ? 'bg-slate-900 border-slate-700 text-gray-200' 
+          : 'bg-white border-gray-200 text-gray-800'
+      }`}>
+        <p>{message}</p>
         <button
           onClick={onClose}
-          className="mt-4 w-full bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 transition"
+          className={`mt-4 w-full p-2 rounded-md transition ${
+            theme === 'dark'
+              ? 'bg-teal-700 hover:bg-teal-600 text-white'
+              : 'bg-teal-600 hover:bg-teal-500 text-white'
+          }`}
         >
           Close
         </button>
@@ -19,6 +30,7 @@ const CustomAlert = ({ message, onClose }) => {
 };
 
 export default function WithdrawalPage() {
+  const { theme } = useTheme();
   const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [formData, setFormData] = useState({
@@ -31,8 +43,8 @@ export default function WithdrawalPage() {
     paypalEmail: "",
     skrillEmail: "",
   });
-  const [balance] = useState(1000); // Example balance
-  const [alertMessage, setAlertMessage] = useState(null); // State for custom alert
+  const [balance] = useState(1000);
+  const [alertMessage, setAlertMessage] = useState(null);
 
   const handlePaymentMethodSelect = (method) => {
     setSelectedPaymentMethod(method);
@@ -50,21 +62,16 @@ export default function WithdrawalPage() {
       return;
     }
 
-    // Validate required fields based on the selected payment method
     switch (selectedPaymentMethod) {
       case "Crypto":
         if (!formData.cryptoAsset || !formData.amount || !formData.btcAddress) {
-          setAlertMessage(
-            "Please fill in all required fields for crypto withdrawal."
-          );
+          setAlertMessage("Please fill in all required fields for crypto withdrawal.");
           return;
         }
         break;
       case "Bank Transfer":
         if (!formData.bankAccountNumber || !formData.bankName) {
-          setAlertMessage(
-            "Please fill in all required fields for bank transfer."
-          );
+          setAlertMessage("Please fill in all required fields for bank transfer.");
           return;
         }
         break;
@@ -90,24 +97,31 @@ export default function WithdrawalPage() {
         break;
     }
 
-    // Submit withdrawal request (e.g., API call)
-    setAlertMessage(
-      `Withdrawal request for $${formData.amount} via ${selectedPaymentMethod} submitted.`
-    );
+    setAlertMessage(`Withdrawal request for $${formData.amount} via ${selectedPaymentMethod} submitted.`);
   };
 
   const renderFormFields = () => {
+    const inputClasses = `w-full p-2 rounded-md border ${
+      theme === 'dark'
+        ? 'bg-slate-800 border-slate-700 text-gray-200'
+        : 'bg-white border-gray-300 text-gray-900'
+    }`;
+
+    const labelClasses = `block ${
+      theme === 'dark' ? 'text-gray-400' : 'text-gray-700'
+    }`;
+
     switch (selectedPaymentMethod) {
       case "Crypto":
         return (
           <>
             <div>
-              <label className="block text-gray-400">Coin Assets</label>
+              <label className={labelClasses}>Coin Assets</label>
               <select
                 name="cryptoAsset"
                 value={formData.cryptoAsset}
                 onChange={handleInputChange}
-                className="w-full p-2 bg-slate-900 text-gray-200 border border-gray-700 rounded-md"
+                className={inputClasses}
               >
                 {["BTC", "ETH", "LTC", "XRP", "BCH"].map((coin) => (
                   <option key={coin} value={coin}>
@@ -117,19 +131,23 @@ export default function WithdrawalPage() {
               </select>
             </div>
             <div>
-              <label className="block text-gray-400">Amount</label>
+              <label className={labelClasses}>Amount</label>
               <input
                 type="number"
                 name="amount"
                 placeholder="Amount"
                 value={formData.amount}
                 onChange={handleInputChange}
-                className="w-full p-2 bg-slate-900 text-gray-200 border border-gray-700 rounded-md"
+                className={inputClasses}
               />
-              <p className="text-sm text-gray-400 mt-1">Balance: ${balance}</p>
+              <p className={`text-sm mt-1 ${
+                theme === 'dark' ? 'text-gray-500' : 'text-gray-600'
+              }`}>
+                Balance: ${balance}
+              </p>
             </div>
             <div>
-              <label className="block text-gray-400">
+              <label className={labelClasses}>
                 {formData.cryptoAsset} Address
               </label>
               <input
@@ -138,7 +156,7 @@ export default function WithdrawalPage() {
                 placeholder={`${formData.cryptoAsset} Address`}
                 value={formData.btcAddress}
                 onChange={handleInputChange}
-                className="w-full p-2 bg-slate-900 text-gray-200 border border-gray-700 rounded-md"
+                className={inputClasses}
               />
             </div>
           </>
@@ -147,49 +165,53 @@ export default function WithdrawalPage() {
         return (
           <>
             <div>
-              <label className="block text-gray-400">Bank Name</label>
+              <label className={labelClasses}>Bank Name</label>
               <input
                 type="text"
                 name="bankName"
                 placeholder="Bank Name"
                 value={formData.bankName}
                 onChange={handleInputChange}
-                className="w-full p-2 bg-slate-900 text-gray-200 border border-gray-700 rounded-md"
+                className={inputClasses}
               />
             </div>
             <div>
-              <label className="block text-gray-400">Account Number</label>
+              <label className={labelClasses}>Account Number</label>
               <input
                 type="text"
                 name="bankAccountNumber"
                 placeholder="Account Number"
                 value={formData.bankAccountNumber}
                 onChange={handleInputChange}
-                className="w-full p-2 bg-slate-900 text-gray-200 border border-gray-700 rounded-md"
+                className={inputClasses}
               />
             </div>
             <div>
-              <label className="block text-gray-400">Account Name</label>
+              <label className={labelClasses}>Account Name</label>
               <input
                 type="text"
                 name="bankAccountName"
                 placeholder="Account Name"
                 value={formData.bankAccountName}
                 onChange={handleInputChange}
-                className="w-full p-2 bg-slate-900 text-gray-200 border border-gray-700 rounded-md"
+                className={inputClasses}
               />
             </div>
             <div>
-              <label className="block text-gray-400">Amount</label>
+              <label className={labelClasses}>Amount</label>
               <input
                 type="number"
                 name="amount"
                 placeholder="Amount"
                 value={formData.amount}
                 onChange={handleInputChange}
-                className="w-full p-2 bg-slate-900 text-gray-200 border border-gray-700 rounded-md"
+                className={inputClasses}
               />
-              <p className="text-sm text-gray-400 mt-1">Balance: ${balance}</p>
+              <p className={`text-sm mt-1 ${
+                theme === 'dark' ? 'text-gray-500' : 'text-gray-600'
+              }`}>
+                Balance: ${balance}
+              </p>
             </div>
           </>
         );
@@ -197,27 +219,31 @@ export default function WithdrawalPage() {
         return (
           <>
             <div>
-              <label className="block text-gray-400">Cash App ID</label>
+              <label className={labelClasses}>Cash App ID</label>
               <input
                 type="text"
                 name="cashAppId"
                 placeholder="Cash App ID"
                 value={formData.cashAppId}
                 onChange={handleInputChange}
-                className="w-full p-2 bg-slate-900 text-gray-200 border border-gray-700 rounded-md"
+                className={inputClasses}
               />
             </div>
             <div>
-              <label className="block text-gray-400">Amount</label>
+              <label className={labelClasses}>Amount</label>
               <input
                 type="number"
                 name="amount"
                 placeholder="Amount"
                 value={formData.amount}
                 onChange={handleInputChange}
-                className="w-full p-2 bg-slate-900 text-gray-200 border border-gray-700 rounded-md"
+                className={inputClasses}
               />
-              <p className="text-sm text-gray-400 mt-1">Balance: ${balance}</p>
+              <p className={`text-sm mt-1 ${
+                theme === 'dark' ? 'text-gray-500' : 'text-gray-600'
+              }`}>
+                Balance: ${balance}
+              </p>
             </div>
           </>
         );
@@ -225,27 +251,31 @@ export default function WithdrawalPage() {
         return (
           <>
             <div>
-              <label className="block text-gray-400">PayPal Email</label>
+              <label className={labelClasses}>PayPal Email</label>
               <input
                 type="email"
                 name="paypalEmail"
                 placeholder="PayPal Email"
                 value={formData.paypalEmail}
                 onChange={handleInputChange}
-                className="w-full p-2 bg-slate-900 text-gray-200 border border-gray-700 rounded-md"
+                className={inputClasses}
               />
             </div>
             <div>
-              <label className="block text-gray-400">Amount</label>
+              <label className={labelClasses}>Amount</label>
               <input
                 type="number"
                 name="amount"
                 placeholder="Amount"
                 value={formData.amount}
                 onChange={handleInputChange}
-                className="w-full p-2 bg-slate-900 text-gray-200 border border-gray-700 rounded-md"
+                className={inputClasses}
               />
-              <p className="text-sm text-gray-400 mt-1">Balance: ${balance}</p>
+              <p className={`text-sm mt-1 ${
+                theme === 'dark' ? 'text-gray-500' : 'text-gray-600'
+              }`}>
+                Balance: ${balance}
+              </p>
             </div>
           </>
         );
@@ -253,27 +283,31 @@ export default function WithdrawalPage() {
         return (
           <>
             <div>
-              <label className="block text-gray-400">Skrill Email</label>
+              <label className={labelClasses}>Skrill Email</label>
               <input
                 type="email"
                 name="skrillEmail"
                 placeholder="Skrill Email"
                 value={formData.skrillEmail}
                 onChange={handleInputChange}
-                className="w-full p-2 bg-slate-900 text-gray-200 border border-gray-700 rounded-md"
+                className={inputClasses}
               />
             </div>
             <div>
-              <label className="block text-gray-400">Amount</label>
+              <label className={labelClasses}>Amount</label>
               <input
                 type="number"
                 name="amount"
                 placeholder="Amount"
                 value={formData.amount}
                 onChange={handleInputChange}
-                className="w-full p-2 bg-slate-900 text-gray-200 border border-gray-700 rounded-md"
+                className={inputClasses}
               />
-              <p className="text-sm text-gray-400 mt-1">Balance: ${balance}</p>
+              <p className={`text-sm mt-1 ${
+                theme === 'dark' ? 'text-gray-500' : 'text-gray-600'
+              }`}>
+                Balance: ${balance}
+              </p>
             </div>
           </>
         );
@@ -284,39 +318,54 @@ export default function WithdrawalPage() {
 
   return (
     <>
-      <HeaderPage />
-      <section className="flex flex-col lg:flex-row justify-between min-h-screen  bg-slate-950 p-4">
+      <section className={`flex flex-col lg:flex-row justify-between min-h-screen p-4 ${
+        theme === 'dark' ? 'bg-slate-950' : 'bg-gray-100'
+      }`}>
         {/* Payment Method Section */}
-        <div className="bg-slate-900 shadow-lg rounded-lg p-6 w-full lg:w-2/3 mb-6 lg:mb-0 lg:mr-4">
-          <h1 className="text-2xl font-bold mb-4 text-teal-600">
+        <div className={`rounded-lg p-6 w-full lg:w-2/3 mb-6 lg:mb-0 lg:mr-4 ${
+          theme === 'dark' ? 'bg-slate-900' : 'bg-white shadow'
+        }`}>
+          <h1 className={`text-2xl font-bold mb-4 ${
+            theme === 'dark' ? 'text-teal-500' : 'text-teal-600'
+          }`}>
             Withdrawal Page
           </h1>
-          <p className="text-gray-400 mb-6">Choose a withdrawal method.</p>
+          <p className={`mb-6 ${
+            theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+          }`}>
+            Choose a withdrawal method.
+          </p>
 
           <button
             onClick={() => setShowPaymentOptions(!showPaymentOptions)}
-            className="w-full bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 transition"
+            className={`w-full p-2 rounded-md transition ${
+              theme === 'dark'
+                ? 'bg-teal-700 hover:bg-teal-600 text-white'
+                : 'bg-teal-600 hover:bg-teal-500 text-white'
+            }`}
           >
             {selectedPaymentMethod || "Select Payment Method"}
           </button>
 
           {showPaymentOptions && (
-            <div className="mt-6 p-4 bg-gray-800 rounded-lg">
-              <h2 className="text-xl font-bold mb-3 text-gray-200">
+            <div className={`mt-6 p-4 rounded-lg ${
+              theme === 'dark' ? 'bg-slate-800' : 'bg-gray-100'
+            }`}>
+              <h2 className={`text-xl font-bold mb-3 ${
+                theme === 'dark' ? 'text-gray-200' : 'text-gray-800'
+              }`}>
                 Select Payment Method
               </h2>
               <ul className="space-y-2">
-                {[
-                  "Bank Transfer",
-                  "Crypto",
-                  "Cash App",
-                  "PayPal",
-                  "Skrill",
-                ].map((method) => (
+                {["Bank Transfer", "Crypto", "Cash App", "PayPal", "Skrill"].map((method) => (
                   <li
                     key={method}
                     onClick={() => handlePaymentMethodSelect(method)}
-                    className="p-2 bg-gray-700 text-gray-200 shadow rounded cursor-pointer hover:bg-gray-600"
+                    className={`p-2 rounded cursor-pointer transition ${
+                      theme === 'dark'
+                        ? 'bg-slate-700 text-gray-200 hover:bg-slate-600'
+                        : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                    }`}
                   >
                     {method}
                   </li>
@@ -327,7 +376,9 @@ export default function WithdrawalPage() {
 
           {selectedPaymentMethod && (
             <div className="mt-6 space-y-4">
-              <h2 className="text-xl font-bold text-gray-200">
+              <h2 className={`text-xl font-bold ${
+                theme === 'dark' ? 'text-gray-200' : 'text-gray-800'
+              }`}>
                 {selectedPaymentMethod} Withdrawal
               </h2>
               {renderFormFields()}
@@ -336,11 +387,17 @@ export default function WithdrawalPage() {
         </div>
 
         {/* Summary Section */}
-        <div className="bg-slate-900 shadow-lg rounded-lg p-6 w-full lg:w-1/3">
-          <h2 className="text-xl font-bold mb-4 text-teal-600">
+        <div className={`rounded-lg p-6 w-full lg:w-1/3 ${
+          theme === 'dark' ? 'bg-slate-900' : 'bg-white shadow'
+        }`}>
+          <h2 className={`text-xl font-bold mb-4 ${
+            theme === 'dark' ? 'text-teal-500' : 'text-teal-600'
+          }`}>
             Withdrawal Summary
           </h2>
-          <div className="space-y-3 text-gray-400">
+          <div className={`space-y-3 ${
+            theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+          }`}>
             <p>
               <span className="font-semibold">Payment Method:</span>{" "}
               {selectedPaymentMethod || "Not selected"}
@@ -401,7 +458,11 @@ export default function WithdrawalPage() {
             )}
             <button
               onClick={handleWithdrawal}
-              className="w-full bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 transition"
+              className={`w-full p-2 rounded-md transition ${
+                theme === 'dark'
+                  ? 'bg-teal-700 hover:bg-teal-600 text-white'
+                  : 'bg-teal-600 hover:bg-teal-500 text-white'
+              }`}
             >
               Confirm Withdrawal
             </button>

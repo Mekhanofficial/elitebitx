@@ -1,5 +1,5 @@
 import React from "react";
-import HeaderPage from "../components/Header";
+import { useTheme } from "next-themes";
 
 const exchanges = [
   {
@@ -35,14 +35,21 @@ const exchanges = [
 ];
 
 const BuyCrypto = () => {
+  const { theme } = useTheme();
+
   return (
     <>
-      <HeaderPage />
-      <div className="bg-slate-950 min-h-screen  text-white flex flex-col items-center py-12">
-        <h1 className="text-4xl font-extrabold text-teal-500 mb-4">
+      <div className={`min-h-screen flex flex-col items-center py-12 ${
+        theme === "dark" ? "bg-slate-950" : "bg-gray-100"
+      }`}>
+        <h1 className={`text-4xl font-extrabold mb-4 ${
+          theme === "dark" ? "text-teal-500" : "text-teal-600"
+        }`}>
           Buy Cryptocurrency
         </h1>
-        <p className="text-lg text-slate-400 mb-8 text-center max-w-xl">
+        <p className={`text-lg mb-8 text-center max-w-xl ${
+          theme === "dark" ? "text-slate-400" : "text-gray-500"
+        }`}>
           Tap on any of the links below to purchase from our trusted partners
           and start your crypto journey today.
         </p>
@@ -54,14 +61,20 @@ const BuyCrypto = () => {
               href={exchange.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-slate-900 border border-teal-700 rounded-2xl shadow-lg p-6 flex flex-col items-center transition-transform transform hover:scale-105 hover:shadow-2xl"
+              className={`rounded-2xl shadow-lg p-6 flex flex-col items-center transition-all duration-300 hover:scale-105 hover:shadow-xl ${
+                theme === "dark"
+                  ? "bg-slate-900 border border-teal-700 hover:border-teal-500 hover:shadow-teal-500/20"
+                  : "bg-white border border-teal-400 hover:border-teal-300 hover:shadow-teal-400/20"
+              }`}
             >
               <img
                 src={exchange.img}
                 alt={exchange.name}
                 className="h-20 w-20 object-contain mb-4"
               />
-              <span className="text-xl font-semibold text-white">
+              <span className={`text-xl font-semibold ${
+                theme === "dark" ? "text-white" : "text-gray-800"
+              }`}>
                 {exchange.name}
               </span>
             </a>
