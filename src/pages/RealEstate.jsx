@@ -1,5 +1,4 @@
 import { useState } from "react";
-import HeaderPage from "../components/Header";
 import px17 from "../pictures/px17.png";
 import px18 from "../pictures/px18.png";
 import px19 from "../pictures/px19.png";
@@ -8,6 +7,7 @@ import px21 from "../pictures/px21.png";
 import px22 from "../pictures/px22.png";
 import Modal from "./Modal";
 import ProjectDetail from "./RealEstatedetails";
+import { useTheme } from "next-themes";
 
 const realest = [
   {
@@ -69,6 +69,7 @@ const realest = [
 ];
 
 export default function RealestPage() {
+  const { theme } = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const [selectedReal, setSelectedReal] = useState(null);
@@ -93,55 +94,142 @@ export default function RealestPage() {
 
   return (
     <>
-      <HeaderPage />
-      <section className=" p-8 bg-slate-950 min-h-screen">
+      <section
+        className={`p-8 min-h-screen ${
+          theme === "dark" ? "bg-slate-950" : "bg-gray-100"
+        }`}
+      >
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-white">Real Estate</h1>
-          <p className="text-gray-400 mt-4 max-w-2xl mx-auto text-lg">
+          <h1
+            className={`text-4xl md:text-5xl font-bold ${
+              theme === "dark" ? "text-white" : "text-gray-800"
+            }`}
+          >
+            Real Estate
+          </h1>
+          <p
+            className={`mt-4 max-w-2xl mx-auto text-lg ${
+              theme === "dark" ? "text-gray-400" : "text-gray-600"
+            }`}
+          >
             Invest in projects and earn passive income
           </p>
-          <h4 className="text-xl font-semibold text-white mt-6">My Projects</h4>
+          <h4
+            className={`text-xl font-semibold mt-6 ${
+              theme === "dark" ? "text-white" : "text-gray-800"
+            }`}
+          >
+            My Projects
+          </h4>
         </div>
 
-        <h1 className="text-3xl font-bold text-white mb-8">All Projects</h1>
+        <h1
+          className={`text-3xl font-bold mb-8 ${
+            theme === "dark" ? "text-white" : "text-gray-800"
+          }`}
+        >
+          All Projects
+        </h1>
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
           {realest.map((real) => (
             <div
               key={real.id}
-              className="bg-slate-900 p-6 rounded-xl flex flex-col items-center text-center shadow-lg border border-gray-800 transition-transform duration-300 hover:scale-105"
+              className={`p-6 rounded-xl flex flex-col items-center text-center shadow-lg border transition-transform duration-300 hover:scale-[1.02] ${
+                theme === "dark"
+                  ? "bg-slate-900 border-gray-800 hover:shadow-teal-500/20"
+                  : "bg-white border-gray-200 hover:shadow-teal-400/20"
+              }`}
             >
               <img
                 className="w-full h-64 rounded-2xl object-cover mb-4 p-2"
                 src={real.image}
                 alt={real.name}
               />
-              <h2 className="text-2xl font-semibold text-white mb-2">
+              <h2
+                className={`text-2xl font-semibold mb-2 ${
+                  theme === "dark" ? "text-white" : "text-gray-800"
+                }`}
+              >
                 {real.name}
               </h2>
-              <p className="text-gray-400 mb-4 text-lg">{real.profitRate}</p>
-              <div className="flex justify-between w-full px-6 text-gray-300 text-lg">
+              <p
+                className={`mb-4 text-lg ${
+                  theme === "dark" ? "text-gray-400" : "text-gray-600"
+                }`}
+              >
+                {real.profitRate}
+              </p>
+              <div
+                className={`flex justify-between w-full px-6 text-lg ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-600"
+                }`}
+              >
                 <div className="text-center">
-                  <h1 className="font-bold text-white">{real.amount}</h1>
-                  <p className="text-gray-400 text-sm font-semibold">MINIMUM</p>
-                  <h1 className="font-bold text-white ">{real.Roi}</h1>
+                  <h1
+                    className={`font-bold ${
+                      theme === "dark" ? "text-white" : "text-gray-800"
+                    }`}
+                  >
+                    {real.amount}
+                  </h1>
+                  <p
+                    className={`text-sm font-semibold ${
+                      theme === "dark" ? "text-gray-400" : "text-gray-500"
+                    }`}
+                  >
+                    MINIMUM
+                  </p>
+                  <h1
+                    className={`font-bold ${
+                      theme === "dark" ? "text-white" : "text-gray-800"
+                    }`}
+                  >
+                    {real.Roi}
+                  </h1>
                 </div>
                 <div className="text-center">
-                  <h1 className="font-bold text-white">ROI</h1>
-                  <p className="text-orange-400 text-sm">Growth & Income</p>
-                  <p className="text-gray-400 text-sm mt-2">STRATEGY</p>
+                  <h1
+                    className={`font-bold ${
+                      theme === "dark" ? "text-white" : "text-gray-800"
+                    }`}
+                  >
+                    ROI
+                  </h1>
+                  <p
+                    className={`text-sm ${
+                      theme === "dark" ? "text-orange-400" : "text-orange-500"
+                    }`}
+                  >
+                    Growth & Income
+                  </p>
+                  <p
+                    className={`text-sm mt-2 ${
+                      theme === "dark" ? "text-gray-400" : "text-gray-500"
+                    }`}
+                  >
+                    STRATEGY
+                  </p>
                 </div>
               </div>
-              <div className="flex gap-5 w-full">
+              <div className="flex gap-4 w-full mt-6">
                 <button
                   onClick={() => handleViewClick(real)}
-                  className="w-full bg-gradient-to-r mt-6 from-slate-700 to-slate-950 text-white px-4 py-3 rounded-lg shadow-lg transition duration-300 hover:from-slate-800 hover:to-slate-700"
+                  className={`w-full px-4 py-3 rounded-lg shadow-lg transition duration-300 ${
+                    theme === "dark"
+                      ? "bg-gradient-to-r from-slate-700 to-slate-900 text-white hover:from-slate-800 hover:to-slate-700"
+                      : "bg-gradient-to-r from-gray-200 to-gray-300 text-gray-800 hover:from-gray-300 hover:to-gray-200"
+                  }`}
                 >
                   View
                 </button>
                 <button
                   onClick={() => handleInvestClick(real)}
-                  className="w-full bg-gradient-to-r mt-6 from-teal-700 to-teal-950 text-white px-4 py-3 rounded-lg shadow-lg transition duration-300 hover:from-teal-900 hover:to-teal-700"
+                  className={`w-full px-4 py-3 rounded-lg shadow-lg transition duration-300 ${
+                    theme === "dark"
+                      ? "bg-gradient-to-r from-teal-700 to-teal-900 text-white hover:from-teal-800 hover:to-teal-700"
+                      : "bg-gradient-to-r from-teal-500 to-teal-700 text-white hover:from-teal-600 hover:to-teal-500"
+                  }`}
                 >
                   Invest Now
                 </button>
@@ -151,37 +239,74 @@ export default function RealestPage() {
         </div>
       </section>
 
+      {/* Investment Modal */}
       {isModalOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
           onClick={closeModal}
         >
           <div
-            className="bg-slate-800 p-8 rounded-lg w-full max-w-md"
+            className={`p-8 rounded-lg w-full max-w-md ${
+              theme === "dark" ? "bg-slate-800" : "bg-white"
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-2xl text-center font-bold text-white mb-4">
-              {selectedReal.name}
+            <h2
+              className={`text-2xl text-center font-bold mb-4 ${
+                theme === "dark" ? "text-white" : "text-gray-800"
+              }`}
+            >
+              {selectedReal?.name}
             </h2>
-            <p className="text-gray-400 mb-2">Amount:</p>
-            <button className="bg-slate-900 flex items-center justify-between rounded-lg my-4 w-96 text-left font-semibold text-gray-600 p-2">
-              {selectedReal.amount}
-              <h2 className="bg-teal-800 text-slate-900 font-semibold p-1 rounded-md">
+            <p className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>
+              Amount:
+            </p>
+            <div
+              className={`flex items-center justify-between rounded-lg my-4 w-full ${
+                theme === "dark"
+                  ? "bg-slate-700 text-gray-300"
+                  : "bg-gray-100 text-gray-800"
+              } p-3`}
+            >
+              {selectedReal?.amount}
+              <span
+                className={`p-1 rounded-md ${
+                  theme === "dark"
+                    ? "bg-teal-800 text-white"
+                    : "bg-teal-600 text-white"
+                }`}
+              >
                 USD
-              </h2>
-            </button>
-            <select className="bg-slate-900 flex items-center justify-between rounded-lg my-4 w-96 text-left font-semibold text-gray-600 p-2">
-              Duration(Days):
+              </span>
+            </div>
+            <select
+              className={`flex items-center justify-between rounded-lg my-4 w-full ${
+                theme === "dark"
+                  ? "bg-slate-700 text-gray-300"
+                  : "bg-gray-100 text-gray-800"
+              } p-3`}
+            >
+              <option>Duration (Days):</option>
               <option>3 Days</option>
               <option>5 Days</option>
               <option>7 Days</option>
               <option>30 Days</option>
             </select>
-            <button className="bg-slate-900 flex items-center justify-between rounded-lg my-4 w-96 text-left font-semibold text-gray-600 p-2">
-              {selectedReal.Roi}
-            </button>
+            <div
+              className={`flex items-center justify-between rounded-lg my-4 w-full ${
+                theme === "dark"
+                  ? "bg-slate-700 text-gray-300"
+                  : "bg-gray-100 text-gray-800"
+              } p-3`}
+            >
+              {selectedReal?.Roi}
+            </div>
             <button
-              className="w-full bg-teal-600 text-white px-4 py-2 rounded-lg"
+              className={`w-full px-4 py-2 rounded-lg ${
+                theme === "dark"
+                  ? "bg-teal-600 hover:bg-teal-500 text-white"
+                  : "bg-teal-500 hover:bg-teal-400 text-white"
+              }`}
               onClick={closeModal}
             >
               Confirm
@@ -190,16 +315,23 @@ export default function RealestPage() {
         </div>
       )}
 
+      {/* Project Detail Modal */}
       {isDetailOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
           onClick={closeDetail}
         >
           <div
-            className="bg-slate-800 p-8 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+            className={`p-8 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto ${
+              theme === "dark" ? "bg-slate-800" : "bg-white"
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <ProjectDetail project={selectedReal} onClose={closeDetail} />
+            <ProjectDetail
+              project={selectedReal}
+              onClose={closeDetail}
+              theme={theme}
+            />
           </div>
         </div>
       )}

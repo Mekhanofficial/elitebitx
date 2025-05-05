@@ -186,7 +186,7 @@ export default function AssetPage() {
 
   return (
     <section
-      className={`overflow-x-hidden min-h-screen ${
+      className={`overflow-x-hidden min-h-screen p-6 ${
         theme === "dark" ? "bg-gray-900" : "bg-slate-50"
       }`}
     >
