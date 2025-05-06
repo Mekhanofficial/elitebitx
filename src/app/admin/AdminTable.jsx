@@ -2,7 +2,7 @@
 
 import AdminTableItem from "./AdminTableItem";
 import { collection, query, getDocs } from "firebase/firestore";
-import { db } from "../../firebase/firebase-config";
+import { db } from "../../../firebase";
 import { useEffect, useState } from "react";
 import ContextProvider from "../../context/ContextProvider";
 

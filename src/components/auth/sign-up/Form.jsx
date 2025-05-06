@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, db } from "../../../../firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from "firebase/auth";
+import { toast } from "react-toastify";
 import countryData from "./CountryData.json";
 import Button from "../../Button";
 import Input from "../Input";
@@ -21,9 +26,7 @@ const SignUpPage = () => {
     password: "",
     confirmPassword: "",
   });
-  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     if (formData.country) {
@@ -42,16 +45,15 @@ const SignUpPage = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError(null);
   };
 
   const validateForm = () => {
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match");
+      toast.error("Passwords do not match");
       return false;
     }
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters");
+      toast.error("Password must be at least 6 characters");
       return false;
     }
     return true;
@@ -59,7 +61,6 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
     setIsLoading(true);
 
     if (!validateForm()) {
@@ -73,8 +74,7 @@ const SignUpPage = () => {
         formData.email,
         formData.password
       );
-      
-      // Only save the specified fields to Firestore
+
       await setDoc(doc(db, "users", userCredential.user.uid), {
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -91,11 +91,12 @@ const SignUpPage = () => {
         displayName: `${formData.firstName} ${formData.lastName}`,
       });
 
-      setShowSuccess(true);
-      setTimeout(() => navigate("/loginpage"), 2000);
+      await sendEmailVerification(userCredential.user);
+
+      toast.success("Verification email sent! Please check your inbox.");
+      setTimeout(() => navigate("/loginpage"), 3000);
     } catch (err) {
       let errorMessage = "Sign up failed. Please try again.";
-      
       switch (err.code) {
         case "auth/email-already-in-use":
           errorMessage = "This email is already registered. Try logging in instead.";
@@ -109,12 +110,12 @@ const SignUpPage = () => {
         default:
           errorMessage = err.message.replace("Firebase: ", "");
       }
-
-      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-orange-500">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-2xl shadow-lg">
@@ -130,54 +131,17 @@ const SignUpPage = () => {
           </h1>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            name="firstName"
-            placeholder="First Name"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-          <Input
-            name="lastName"
-            placeholder="Last Name"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-          <Input
-            name="email"
-            type="email"
-            placeholder="Email Address"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          <Input
-            name="phone"
-            placeholder="Phone Number"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-          />
-          <select
-            name="sex"
-            className="w-full p-3 border rounded-lg bg-gray-100"
-            onChange={handleChange}
-            value={formData.sex}
-            required
-          >
+          <Input name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} required />
+          <Input name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} required />
+          <Input name="email" type="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required />
+          <Input name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleChange} required />
+          <select name="sex" className="w-full p-3 border rounded-lg bg-gray-100" onChange={handleChange} value={formData.sex} required>
             <option value="">-- Select Sex --</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
           </select>
-          <select
-            name="country"
-            className="w-full p-3 border rounded-lg bg-gray-100"
-            onChange={handleChange}
-            value={formData.country}
-            required
-          >
+          <select name="country" className="w-full p-3 border rounded-lg bg-gray-100" onChange={handleChange} value={formData.country} required>
             <option value="">-- Select Country --</option>
             {countryData.map((country) => (
               <option key={country.name} value={country.name}>
@@ -185,29 +149,9 @@ const SignUpPage = () => {
               </option>
             ))}
           </select>
-          <Input
-            name="password"
-            type="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          <Input
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-          />
-          {error && <p className="text-red-400 text-sm">{error}</p>}
-          <Button
-            type="fill"
-            className="w-full p-3 text-white bg-orange-500 rounded-lg hover:bg-orange-600"
-            disabled={isLoading}
-            isLoading={isLoading}
-          >
+          <Input name="password" type="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+          <Input name="confirmPassword" type="password" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} required />
+          <Button type="fill" className="w-full p-3 text-white bg-orange-500 rounded-lg hover:bg-orange-600" disabled={isLoading} isLoading={isLoading}>
             SIGN UP
           </Button>
         </form>

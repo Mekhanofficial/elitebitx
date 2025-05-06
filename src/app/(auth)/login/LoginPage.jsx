@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebase";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -13,34 +14,48 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    // setError("");
     setIsLoading(true);
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+    
+      if (!user.emailVerified) {
+        await auth.signOut(); // prevent access
+        toast.error("Please verify your email before logging in.");
+        return;
+      }
+      toast.success("Welcome Home!");
+      // Email is verified, allow access
       navigate("/dashboard");
-    } catch (err) {
-      let friendlyError = "Login failed";
       
+    } catch (err) {
       switch (err.code) {
         case 'auth/invalid-credential':
         case 'auth/wrong-password':
-          friendlyError = "Invalid email or password";
+          toast.error( "Invalid email or password");
           break;
         case 'auth/user-not-found':
-          friendlyError = "No account found with this email";
+          toast.error("No account found with this email");
           break;
         case 'auth/too-many-requests':
-          friendlyError = "Account temporarily locked. Try again later";
+          toast.error("Account temporarily locked. Try again later");
           break;
         case 'auth/user-disabled':
-          friendlyError = "This account has been disabled";
+          toast.error("This account has been disabled");
           break;
+          case 'auth/network-request-failed':
+  toast.error("Network error. Please check your internet connection.");
+  break;
+  case 'auth/invalid-email':
+  toast.error("Please enter a valid email address.");
+  break;
         default:
-          friendlyError = err.message.replace("Firebase: ", "");
+          toast.error("Something went wrong");
+
       }
 
-      setError(friendlyError);
     } finally {
       setIsLoading(false);
     }
@@ -62,13 +77,6 @@ const LoginPage = () => {
             ELITE<span className="text-amber-400">BITX</span>
           </h1>
         </div>
-        
-        {error && (
-          <div className="p-3 text-sm text-center text-red-600 bg-red-100 rounded-lg animate-fade-in">
-            {error}
-          </div>
-        )}
-
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <input
@@ -160,7 +168,7 @@ const LoginPage = () => {
         </form>
         
         <p className="text-sm text-center text-gray-600">
-          <Link to="/forgot-password" className="text-gray-400 hover:underline">
+          <Link to="/ForgotPassword" className="text-gray-400 hover:underline">
             Forgot Password?
           </Link>
         </p>

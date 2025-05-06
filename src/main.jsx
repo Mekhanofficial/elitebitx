@@ -32,8 +32,8 @@ import VerifyAccountPage from "./pages/VerifyAccount.jsx";
 import AccountPage from "./pages/Account.jsx";
 import AccountSetPage from "./pages/AccountSettings.jsx";
 import EmailUpdatePage from "./pages/EmailUpdate.jsx";
-import PasswordUpdatePage from "./pages/PasswordUpdate.jsx";
-import PhotoUpdatePage from "./pages/PhotoUpdate.jsx";
+import PasswordUpdate from "./pages/PasswordUpdate.jsx";
+import UpdatePhotoPage from "./pages/UpdatePhotoPage.jsx";
 import ReferralsPage from "./pages/Referrals.jsx";
 import DailySignalPage from "./pages/DailySignal.jsx";
 import RealestPage from "./pages/RealEstate.jsx";
@@ -42,6 +42,14 @@ import ProjectDetail from "./pages/RealEstatedetails.jsx";
 import PlaceTradePage from "./pages/PlaceTrade.jsx";
 import AssetPage from "./pages/Assets.jsx";
 import { PrivateRoute } from "./PrivateRoute.jsx";
+import ForgotPassword from "./app/(auth)/login/forgotpassword.jsx";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AdminDashboard from "./app/admin/AdminDashboard.jsx";
+import AdminSignup from "./app/admin/AdminSignup.jsx";
+import AdminLogin from "./app/admin/AdminLogin.jsx";
+import ProtectedAdminRoute from "../src/app/admin/ProtectedAdminRoute.jsx";
+
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -58,6 +66,10 @@ const proRouter = createBrowserRouter([
   {
     path: "/SignUpPage",
     element: <SignUpPage />,
+  },
+  {
+    path: "/ForgotPassword",
+    element: <ForgotPassword />,
   },
   // Protected routes
   {
@@ -105,11 +117,11 @@ const proRouter = createBrowserRouter([
       },
       {
         path: "/PasswordUpdate",
-        element: <PasswordUpdatePage />,
+        element: <PasswordUpdate />,
       },
       {
-        path: "/PhotoUpdate",
-        element: <PhotoUpdatePage />,
+        path: "/UpdatePhoto",
+        element: <UpdatePhotoPage />,
       },
       {
         path: "/Transactions",
@@ -190,10 +202,33 @@ const proRouter = createBrowserRouter([
     path: "/ContactImg",
     element: <SideImg />,
   },
+  //Admin URLS/route
+  {
+    path: "/AdminDashboard",
+    element: (
+      <ProtectedAdminRoute>
+        <AdminDashboard />
+      </ProtectedAdminRoute>
+    ),
+  },
+  
+  {
+    path: "/AdminSignup",
+    element: <AdminSignup />,
+  },
+  {
+    path: "/AdminLogin",
+    element: <AdminLogin />,
+  },
+  
+
 ]);
 
-root.render(
-  <React.StrictMode>
-    <RouterProvider router={proRouter} />
-  </React.StrictMode>
-);
+  root.render(
+    <React.StrictMode>
+      <RouterProvider router={proRouter} />
+      <ToastContainer /> {/* This enables react-toastify globally */}
+    </React.StrictMode>
+  );
+  
+

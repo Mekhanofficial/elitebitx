@@ -13,22 +13,27 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import HeaderPage from "../components/Header";
 import { auth } from "../../firebase";
-import { signOut } from "firebase/auth";
+import { signOut, onAuthStateChanged } from "firebase/auth";
 
 export default function AccountPage() {
-  const [user, setUser] = useState({ name: "", email: "" });
+  const [user, setUser] = useState({ name: "", email: "", photoURL: "" });
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
 
+  // ✅ Listen for auth changes, including photoURL updates
   useEffect(() => {
-    const currentUser = auth.currentUser;
-    if (currentUser) {
-      setUser({
-        name: currentUser.displayName || "User",
-        email: currentUser.email || "user@example.com"
-      });
-    }
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser({
+          name: currentUser.displayName || "User",
+          email: currentUser.email || "user@example.com",
+          photoURL: currentUser.photoURL || "",
+        });
+      }
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const handleLogout = async () => {
@@ -50,74 +55,34 @@ export default function AccountPage() {
       <div className="bg-gradient-to-b from-slate-950 to-slate-900 min-h-screen flex flex-col items-center p-6 text-white relative">
         {/* Profile Section */}
         <div className="flex flex-col items-center mb-8 text-center">
-          <div className="w-32 h-32 bg-slate-800 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-slate-700 hover:border-teal-500">
-            <FontAwesomeIcon
-              icon={faImage}
-              className="text-7xl text-slate-400 hover:text-teal-500 transition-all duration-300"
+          {user.photoURL ? (
+            <img
+              src={user.photoURL}
+              alt="Profile"
+              className="w-32 h-32 rounded-full object-cover border-4 border-teal-500 shadow-lg"
             />
-          </div>
+          ) : (
+            <div className="w-32 h-32 bg-slate-800 rounded-full flex items-center justify-center shadow-lg border-2 border-slate-700">
+              <FontAwesomeIcon
+                icon={faImage}
+                className="text-5xl text-slate-400"
+              />
+            </div>
+          )}
           <h2 className="text-3xl font-bold mt-4 text-white">{user.name}</h2>
           <p className="text-slate-400 text-sm mt-1">{user.email}</p>
         </div>
 
         {/* Buttons Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-2xl p-4">
-          <Button
-            icon={faUserFriends}
-            text="Referrals"
-            iconColor="text-teal-400"
-            bgColor="bg-slate-800"
-            onClick={() => navigate("/referrals")}
-          />
-          <Button
-            icon={faSignOutAlt}
-            text="Logout"
-            iconColor="text-red-400"
-            bgColor="bg-slate-800"
-            onClick={() => setShowLogoutModal(true)}
-          />
-          <Button
-            icon={faStar}
-            text="Watch List"
-            iconColor="text-yellow-400"
-            bgColor="bg-slate-800"
-            onClick={() => navigate("/watchlist")}
-          />
-          <Button
-            icon={faEnvelope}
-            text="Update Email"
-            iconColor="text-blue-400"
-            bgColor="bg-slate-800"
-            onClick={() => navigate("/update-email")}
-          />
-          <Button
-            icon={faMoneyBill}
-            text="Withdrawals"
-            iconColor="text-green-400"
-            bgColor="bg-slate-800"
-            onClick={() => navigate("/withdrawals")}
-          />
-          <Button
-            icon={faImage}
-            text="Update Photo"
-            iconColor="text-pink-400"
-            bgColor="bg-slate-800"
-            onClick={() => navigate("/update-photo")}
-          />
-          <Button
-            icon={faLock}
-            text="Update Password"
-            iconColor="text-purple-400"
-            bgColor="bg-slate-800"
-            onClick={() => navigate("/update-password")}
-          />
-          <Button
-            icon={faCog}
-            text="Account Settings"
-            iconColor="text-orange-400"
-            bgColor="bg-slate-800"
-            onClick={() => navigate("/account-settings")}
-          />
+          <Button icon={faUserFriends} text="Referrals" iconColor="text-teal-400" bgColor="bg-slate-800" onClick={() => navigate("/referrals")} />
+          <Button icon={faSignOutAlt} text="Logout" iconColor="text-red-400" bgColor="bg-slate-800" onClick={() => setShowLogoutModal(true)} />
+          <Button icon={faStar} text="Watch List" iconColor="text-yellow-400" bgColor="bg-slate-800" onClick={() => navigate("/watchlist")} />
+          <Button icon={faEnvelope} text="Update Email" iconColor="text-blue-400" bgColor="bg-slate-800" onClick={() => navigate("/update-email")} />
+          <Button icon={faMoneyBill} text="Withdrawals" iconColor="text-green-400" bgColor="bg-slate-800" onClick={() => navigate("/withdrawals")} />
+          <Button icon={faImage} text="Update Photo" iconColor="text-pink-400" bgColor="bg-slate-800" onClick={() => navigate("/UpdatePhoto")} />
+          <Button icon={faLock} text="Update Password" iconColor="text-purple-400" bgColor="bg-slate-800" onClick={() => navigate("/PasswordUpdate")} />
+          <Button icon={faCog} text="Account Settings" iconColor="text-orange-400" bgColor="bg-slate-800" onClick={() => navigate("/account-settings")} />
         </div>
 
         {/* Logout Confirmation Modal */}
@@ -125,16 +90,10 @@ export default function AccountPage() {
           <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
             <div className="bg-slate-800 border border-slate-700 rounded-xl p-6 w-full max-w-md shadow-2xl animate-fade-in">
               <div className="flex items-center gap-3 mb-4">
-                <FontAwesomeIcon 
-                  icon={faSignOutAlt} 
-                  className="text-red-500 text-xl" 
-                />
+                <FontAwesomeIcon icon={faSignOutAlt} className="text-red-500 text-xl" />
                 <h3 className="text-xl font-bold text-white">Confirm Logout</h3>
               </div>
-              <p className="text-slate-300 mb-6">
-                You'll need to sign in again to access your account.
-              </p>
-              
+              <p className="text-slate-300 mb-6">You'll need to sign in again to access your account.</p>
               <div className="flex gap-3 justify-end">
                 <button
                   onClick={() => setShowLogoutModal(false)}
@@ -150,14 +109,9 @@ export default function AccountPage() {
                 >
                   {isLoggingOut ? (
                     <>
-                      <svg 
-                        className="animate-spin h-4 w-4 text-white" 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        fill="none" 
-                        viewBox="0 0 24 24"
-                      >
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                       </svg>
                       Logging Out...
                     </>
