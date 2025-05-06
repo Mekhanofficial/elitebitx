@@ -1,4 +1,4 @@
-import HeaderPage from "../components/Header";
+import { useTheme } from "next-themes";
 import bt1 from "../pictures/bt1.jpeg";
 
 // Bot data array
@@ -78,14 +78,29 @@ const bots = [
 ];
 
 export default function BuyBotPage() {
+  const { theme } = useTheme();
+
   return (
     <>
-      <HeaderPage />
-      <section className=" p-8 bg-slate-950 min-h-screen">
+      <section
+        className={`p-8 min-h-screen ${
+          theme === "dark" ? "bg-slate-950" : "bg-gray-100"
+        }`}
+      >
         {/* Header Section */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-white">Trading Bots</h1>
-          <p className="text-gray-400 mt-4 max-w-2xl mx-auto text-lg">
+          <h1
+            className={`text-4xl md:text-5xl font-bold ${
+              theme === "dark" ? "text-white" : "text-gray-800"
+            }`}
+          >
+            Trading Bots
+          </h1>
+          <p
+            className={`mt-4 max-w-2xl mx-auto text-lg ${
+              theme === "dark" ? "text-gray-400" : "text-gray-600"
+            }`}
+          >
             Purchasing our Trading Bot can help you streamline your trading
             strategy and potentially maximize your profits. Our Trading Bot is
             designed to analyze market trends and execute trades based on
@@ -95,11 +110,15 @@ export default function BuyBotPage() {
         </div>
 
         {/* Bot Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {bots.map((bot) => (
             <div
               key={bot.id}
-              className="bg-slate-900 p-6 rounded-lg flex flex-col items-center text-center shadow-lg border border-gray-800 hover:scale-105 transition-transform duration-300"
+              className={`p-6 rounded-lg flex flex-col items-center text-center shadow-lg border transition-transform duration-300 hover:scale-[1.03] ${
+                theme === "dark"
+                  ? "bg-slate-900 border-gray-800 hover:shadow-teal-500/20"
+                  : "bg-white border-gray-200 hover:shadow-teal-400/20"
+              }`}
             >
               {/* Bot Image and Status */}
               <div className="relative mb-4">
@@ -108,32 +127,100 @@ export default function BuyBotPage() {
                   src={bot.image}
                   alt={bot.name}
                 />
-                <span className="absolute top-0 right-0 bg-green-500 w-5 h-5 rounded-full border-2 border-slate-950"></span>
+                <span
+                  className={`absolute top-0 right-0 w-5 h-5 rounded-full border-2 ${
+                    theme === "dark"
+                      ? "bg-green-500 border-slate-900"
+                      : "bg-green-400 border-white"
+                  }`}
+                ></span>
               </div>
 
               {/* Bot Name and Profit Rate */}
-              <h2 className="text-2xl font-semibold text-white">{bot.name}</h2>
-              <h5 className="text-gray-400 mb-4 text-lg">
+              <h2
+                className={`text-2xl font-semibold ${
+                  theme === "dark" ? "text-white" : "text-gray-800"
+                }`}
+              >
+                {bot.name}
+              </h2>
+              <h5
+                className={`mb-4 text-lg ${
+                  theme === "dark" ? "text-gray-400" : "text-gray-500"
+                }`}
+              >
                 Profit Rate:{" "}
-                <span className="text-green-500">{bot.profitRate}</span>
+                <span
+                  className={
+                    theme === "dark" ? "text-green-500" : "text-green-600"
+                  }
+                >
+                  {bot.profitRate}
+                </span>
               </h5>
 
               {/* Bot Details */}
-              <div className="flex justify-between w-full px-6 text-gray-300 text-lg">
+              <div
+                className={`flex justify-between w-full px-6 text-lg ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-600"
+                }`}
+              >
                 <div className="text-left">
-                  <h1 className="font-bold text-white">{bot.amount}</h1>
-                  <h1 className="text-gray-400">AMOUNT</h1>
-                  <h1 className="font-bold text-white">{bot.winRate}</h1>
+                  <h1
+                    className={`font-bold ${
+                      theme === "dark" ? "text-white" : "text-gray-800"
+                    }`}
+                  >
+                    {bot.amount}
+                  </h1>
+                  <h1
+                    className={
+                      theme === "dark" ? "text-gray-400" : "text-gray-500"
+                    }
+                  >
+                    AMOUNT
+                  </h1>
+                  <h1
+                    className={`font-bold ${
+                      theme === "dark" ? "text-white" : "text-gray-800"
+                    }`}
+                  >
+                    {bot.winRate}
+                  </h1>
                 </div>
                 <div className="text-right">
-                  <h1 className="font-bold text-white">BOT LEVEL</h1>
-                  <h1 className="text-orange-400">{bot.botLevel}</h1>
-                  <h1 className="text-gray-400">WIN RATE</h1>
+                  <h1
+                    className={`font-bold ${
+                      theme === "dark" ? "text-white" : "text-gray-800"
+                    }`}
+                  >
+                    BOT LEVEL
+                  </h1>
+                  <h1
+                    className={
+                      theme === "dark" ? "text-orange-400" : "text-orange-500"
+                    }
+                  >
+                    {bot.botLevel}
+                  </h1>
+                  <h1
+                    className={
+                      theme === "dark" ? "text-gray-400" : "text-gray-500"
+                    }
+                  >
+                    WIN RATE
+                  </h1>
                 </div>
               </div>
 
               {/* Purchase Button */}
-              <button className="w-full bg-gradient-to-r mt-3 from-teal-950 to-teal-700 text-white px-4 py-3 rounded-lg flex items-center justify-center gap-2 transition duration-300 shadow-lg mb-6 hover:shadow-xl">
+              <button
+                className={`w-full mt-3 px-4 py-3 rounded-lg flex items-center justify-center gap-2 transition duration-300 shadow-lg mb-6 hover:shadow-xl ${
+                  theme === "dark"
+                    ? "bg-gradient-to-r from-teal-900 to-teal-700 text-white hover:from-teal-800 hover:to-teal-600"
+                    : "bg-gradient-to-r from-teal-600 to-teal-400 text-white hover:from-teal-500 hover:to-teal-300"
+                }`}
+              >
                 Purchase
               </button>
             </div>

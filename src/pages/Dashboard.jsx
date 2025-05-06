@@ -14,11 +14,11 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { faBitcoin } from "@fortawesome/free-brands-svg-icons";
-import HeaderPage from "../components/Header";
 import { auth } from "../../firebase";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
+import { useTheme } from "next-themes";
+import Layout from "../components/Layout";
 
-// Simulated trading data with ups and downs
 const data = [
   { value: 10 },
   { value: 0 },
@@ -31,7 +31,6 @@ const data = [
   { value: 65 },
 ];
 
-// Helper function to abbreviate volume
 const abbreviateVolume = (volume) => {
   if (volume >= 1_000_000_000) {
     return `$${(volume / 1_000_000_000).toFixed(1)}B`;
@@ -45,6 +44,7 @@ const abbreviateVolume = (volume) => {
 };
 
 export default function DashPage() {
+  const { theme } = useTheme();
   const [hoverIndex, setHoverIndex] = useState(null);
   const tradeVolumes = [3, 7, 5, 9, 6, 8, 4, 10, 2, 7];
 
@@ -56,19 +56,17 @@ export default function DashPage() {
   ];
 
   const [cryptoData, setCryptoData] = useState([]);
+  const [user, setUser] = useState({ name: "" });
 
+  useEffect(() => {
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      setUser({
+        name: currentUser.displayName || "User",
+      });
+    }
+  }, []);
 
-
-  const [user, setUser] = useState({ name: ""});
-    useEffect(() => {
-      const currentUser = auth.currentUser;
-      if (currentUser) {
-        setUser({
-          name: currentUser.displayName || "User",
-        });
-      }
-    }, []);
-  
   useEffect(() => {
     const fetchCryptoData = async () => {
       try {
@@ -104,28 +102,55 @@ export default function DashPage() {
     fetchCryptoData();
   }, []);
 
+  const bgColor = theme === "dark" ? "bg-zinc-950" : "bg-gray-50";
+  const cardBg = theme === "dark" ? "bg-slate-900" : "bg-white";
+  const borderColor = theme === "dark" ? "border-slate-700" : "border-gray-200";
+  const textColor = theme === "dark" ? "text-white" : "text-gray-900";
+  const secondaryText = theme === "dark" ? "text-gray-300" : "text-gray-600";
+
   return (
-    <>
-      <HeaderPage />
-      <section className="flex flex-col lg:flex-row min-h-screen bg-zinc-950 text-white p-4 lg:p-8 overflow-x-hidden">
-        {/* Left Side */}
+    <Layout user={user}>
+      <section
+        className={`flex flex-col lg:flex-row min-h-screen bg-gray-100 dark:bg-zinc-950 text-gray-900 dark:text-white p- lg:p-8 overflow-x-hidden`}
+      >
         <div className="w-full lg:w-1/2 lg:pr-4">
-          {/* Welcome Card */}
-          <div className="bg-gradient-to-r from-teal-700 to-teal-950 border-2 border-slate-700 rounded-lg p-4 lg:p-6 mb-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+          <div
+            className={`bg-gradient-to-r ${
+              theme === "dark"
+                ? "from-teal-700 to-teal-950"
+                : "from-teal-500 to-teal-700"
+            } border-2 ${borderColor} rounded-lg p-4 lg:p-6 mb-6 shadow-lg hover:shadow-xl transition-shadow duration-300 hidden lg:block`}
+          >
             <h1 className="text-xl lg:text-2xl font-bold mb-2">
-              Welcome {user.name} to EliteBitx!
+              Welcome{" "}
+              <span className="truncate max-w-[180px] inline-block align-bottom">
+                {user.name}
+              </span>{" "}
+              to EliteBitx!
             </h1>
-            <p className="text-sm lg:text-base text-gray-300 mb-4">
+            <p className={`text-sm lg:text-base ${secondaryText} mb-4`}>
               Your gateway to the exciting world of cryptocurrency trading.
             </p>
-            <button className="bg-gray-300 hover:bg-teal-600 hover:text-black text-teal-600 px-4 py-2 rounded-full flex items-center gap-2 transition duration-300 text-sm lg:text-base">
+            <button
+              className={`${
+                theme === "dark"
+                  ? "bg-gray-300 hover:bg-teal-600 hover:text-black text-teal-600"
+                  : "bg-white hover:bg-teal-600 text-teal-700"
+              } px-4 py-2 rounded-full flex items-center gap-2 transition duration-300 text-sm lg:text-base`}
+            >
               <FontAwesomeIcon icon={faBitcoin} />
               Crypto Update
             </button>
           </div>
 
           {/* Balance Card */}
-          <div className="bg-gradient-to-r from-slate-700 to-slate-950 rounded-lg p-4 lg:p-6 mb-6 shadow-lg hover:shadow-lg transition-all duration-300 border border-gray-800 hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105">
+          <div
+            className={`bg-gradient-to-r ${
+              theme === "dark"
+                ? "from-slate-700 to-slate-950"
+                : "from-slate-200 to-slate-400"
+            } rounded-lg p-4 lg:p-6 mb-6 shadow-lg hover:shadow-lg transition-all duration-300 border ${borderColor} hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105`}
+          >
             <div className="flex justify-between items-center mb-4">
               <h4 className="text-base lg:text-lg font-semibold">
                 Available Balance:
@@ -133,7 +158,7 @@ export default function DashPage() {
               <FontAwesomeIcon icon={faEye} className="cursor-pointer" />
             </div>
             <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
-              <h1 className="text-2xl lg:text-3xl font-bold">$0</h1>
+              <h1 className="text-2xl lg:text-3xl font-bold">$150,975.00</h1>
               <div className="flex items-center gap-3">
                 <h3 className="text-sm lg:text-base">Transactions</h3>
                 <FontAwesomeIcon
@@ -149,19 +174,27 @@ export default function DashPage() {
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-gradient-to-r from-slate-700 to-slate-950 rounded-lg p-4 lg:p-6 mb-6 shadow-lg hover:shadow-lg transition-all duration-300 border border-gray-800 hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105">
+          <div
+            className={`bg-gradient-to-r ${
+              theme === "dark"
+                ? "from-slate-700 to-slate-950"
+                : "from-slate-200 to-slate-400"
+            } rounded-lg p-4 lg:p-6 mb-6 shadow-lg hover:shadow-lg transition-all duration-300 border ${borderColor} hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105`}
+          >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {actions.map((action, index) => (
                 <div key={index} className="text-center">
                   <div
-                    className={`p-3 lg:p-4 rounded-full inline-block mb-2 bg-slate-950 ${action.color} transition-all duration-300 relative`}
+                    className={`p-3 lg:p-4 rounded-full inline-block mb-2 ${
+                      theme === "dark" ? "bg-slate-950" : "bg-gray-100"
+                    } ${action.color} transition-all duration-300 relative`}
                   >
                     <FontAwesomeIcon
                       icon={action.icon}
                       className={`h-5 lg:h-6 ${action.color}`}
                     />
                   </div>
-                  <h3 className="text-xs lg:text-sm font-semibold">
+                  <h3 className="text-xs font-bold dark:text-teal-500 text-teal-800">
                     {action.label}
                   </h3>
                 </div>
@@ -179,7 +212,11 @@ export default function DashPage() {
             ].map((stat, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-r from-slate-700 to-slate-950 rounded-lg p-4 lg:p-6 shadow-lg hover:shadow-lg transition-all duration-300 border border-gray-800 hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105"
+                className={`bg-gradient-to-r ${
+                  theme === "dark"
+                    ? "from-slate-700 to-slate-950"
+                    : "from-slate-200 to-slate-400"
+                } rounded-lg p-4 lg:p-6 shadow-lg hover:shadow-lg transition-all duration-300 border ${borderColor} hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105`}
               >
                 <div className="flex items-center gap-4">
                   <div className="bg-teal-600 p-2 lg:p-3 rounded-full">
@@ -189,7 +226,7 @@ export default function DashPage() {
                     <h3 className="text-xl lg:text-2xl font-bold">
                       {stat.value}
                     </h3>
-                    <p className="text-xs lg:text-sm text-gray-300">
+                    <p className={`text-xs lg:text-sm ${secondaryText}`}>
                       {stat.label}
                     </p>
                   </div>
@@ -200,12 +237,18 @@ export default function DashPage() {
 
           {/* Trade Volumes and Chart */}
           <div className="flex flex-col sm:flex-row gap-4 mt-5">
-            <div className="bg-[#1A1D2E] p-4 lg:p-5 rounded-xl flex-1 flex gap-6 lg:gap-10 items-center text-white hover:shadow-lg transition-all duration-300 border border-gray-800 hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105 h-[100px] lg:h-[120px]">
+            <div
+              className={`${
+                theme === "dark" ? "bg-[#1A1D2E]" : "bg-gray-200"
+              } p-4 lg:p-5 rounded-xl flex-1 flex gap-6 lg:gap-10 items-center hover:shadow-lg transition-all duration-300 border ${borderColor} hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105 h-[100px] lg:h-[120px]`}
+            >
               <div className="flex flex-col">
                 <span className="text-xl lg:text-2xl font-bold">
                   {tradeVolumes.reduce((a, b) => a + b, 0)}
                 </span>
-                <span className="text-sm lg:text-lg text-gray-400">Trades</span>
+                <span className={`text-sm lg:text-lg ${secondaryText}`}>
+                  Trades
+                </span>
               </div>
               <div className="flex mt-2 gap-1">
                 {tradeVolumes.map((height, i) => (
@@ -221,12 +264,18 @@ export default function DashPage() {
                         className={`w-2 lg:w-3 h-1 rounded-sm ${
                           j % 2 === 0
                             ? "bg-green-500 glow"
-                            : "bg-gray-400 glowup"
+                            : theme === "dark"
+                            ? "bg-gray-400 glowup"
+                            : "bg-gray-500 glowup"
                         }`}
                       ></div>
                     ))}
                     {hoverIndex === i && (
-                      <div className="absolute bottom-full mb-2 bg-black text-white text-xs px-2 py-1 rounded-md">
+                      <div
+                        className={`absolute bottom-full mb-2 ${
+                          theme === "dark" ? "bg-black" : "bg-white"
+                        } ${textColor} text-xs px-2 py-1 rounded-md shadow-md`}
+                      >
                         {`Trade ${i + 1}: ${height} orders`}
                       </div>
                     )}
@@ -235,13 +284,29 @@ export default function DashPage() {
               </div>
             </div>
 
-            <div className="bg-slate-900 p-4 flex items-center rounded-xl shadow-lg flex-1 text-white hover:shadow-lg transition-all duration-300 border border-gray-800 hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105 h-[100px] lg:h-[120px]">
+            <div
+              className={`${
+                theme === "dark" ? "bg-slate-900" : "bg-gray-200"
+              } p-4 flex items-center rounded-xl shadow-lg flex-1 hover:shadow-lg transition-all duration-300 border ${borderColor} hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105 h-[100px] lg:h-[120px]`}
+            >
               <div>
-                <p className="text-sm lg:text-md font-bold text-gray-400">0</p>
-                <p className="text-lg lg:text-xl font-bold text-slate-300">
+                <p className={`text-sm lg:text-md font-bold ${secondaryText}`}>
+                  0
+                </p>
+                <p
+                  className={`text-lg lg:text-xl font-bold ${
+                    theme === "dark" ? "text-slate-300" : "text-gray-700"
+                  }`}
+                >
                   Total
                 </p>
-                <p className="text-xs lg:text-sm text-gray-500">Won</p>
+                <p
+                  className={`text-xs lg:text-sm ${
+                    theme === "dark" ? "text-gray-500" : "text-gray-400"
+                  }`}
+                >
+                  Won
+                </p>
               </div>
               <ResponsiveContainer height={60} width="100%">
                 <LineChart data={data}>
@@ -261,7 +326,13 @@ export default function DashPage() {
         {/* Right Side */}
         <div className="w-full lg:w-1/2 lg:pl-4">
           {/* Trade Progress */}
-          <div className="bg-gradient-to-r from-slate-700 to-slate-950 rounded-lg p-4 lg:p-6 mb-6 shadow-lg hover:shadow-lg transition-all duration-300 border border-gray-800 hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105">
+          <div
+            className={`bg-gradient-to-r ${
+              theme === "dark"
+                ? "from-slate-700 to-slate-950"
+                : "from-slate-200 to-slate-400"
+            } rounded-lg p-4 lg:p-6 mb-6 shadow-lg hover:shadow-lg transition-all duration-300 border ${borderColor} hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105`}
+          >
             <h2 className="text-xl lg:text-2xl font-bold mb-4">
               Trade Progress
             </h2>
@@ -277,7 +348,13 @@ export default function DashPage() {
           </div>
 
           {/* Verify Account */}
-          <button className="w-full bg-gradient-to-r from-teal-950 to-teal-700 text-white px-4 py-3 rounded-lg flex items-center justify-center gap-2 transition duration-300 shadow-lg mb-6 hover:shadow-xl text-sm lg:text-base">
+          <button
+            className={`w-full bg-gradient-to-r ${
+              theme === "dark"
+                ? "from-teal-950 to-teal-700"
+                : "from-teal-600 to-teal-800"
+            } text-white px-4 py-3 rounded-lg flex items-center justify-center gap-2 transition duration-300 shadow-lg mb-6 hover:shadow-xl text-sm lg:text-base`}
+          >
             VERIFY ACCOUNT
           </button>
 
@@ -286,7 +363,13 @@ export default function DashPage() {
             {cryptoData.map((crypto, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-700 hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105 flex items-center"
+                className={`bg-gradient-to-r ${
+                  theme === "dark"
+                    ? "from-slate-800 to-slate-900"
+                    : "from-gray-100 to-gray-200"
+                } rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300 border ${
+                  theme === "dark" ? "border-gray-700" : "border-gray-300"
+                } hover:border-teal-500 hover:shadow-teal-500/50 hover:scale-105 flex items-center`}
               >
                 <img
                   src={crypto.image}
@@ -295,7 +378,9 @@ export default function DashPage() {
                 />
                 <div className="flex-1">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs lg:text-sm text-gray-300 font-medium">
+                    <span
+                      className={`text-xs lg:text-sm ${secondaryText} font-medium`}
+                    >
                       {crypto.name}
                     </span>
                     <span
@@ -309,10 +394,10 @@ export default function DashPage() {
                     </span>
                   </div>
                   <div className="flex justify-between items-center mt-2">
-                    <h2 className="text-sm lg:text-lg font-bold text-white">
+                    <h2 className={`text-sm lg:text-lg font-bold ${textColor}`}>
                       {crypto.price}
                     </h2>
-                    <span className="text-xs lg:text-sm text-gray-300">
+                    <span className={`text-xs lg:text-sm ${secondaryText}`}>
                       Vol: {crypto.volume}
                     </span>
                   </div>
@@ -322,6 +407,6 @@ export default function DashPage() {
           </div>
         </div>
       </section>
-    </>
+    </Layout>
   );
 }

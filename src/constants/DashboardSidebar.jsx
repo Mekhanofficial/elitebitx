@@ -19,12 +19,12 @@ import {
   faClipboardList,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function DashboardSidebar() {
+export default function DashboardSidebar({ isCollapsed }) {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const location = useLocation();
 
   const mainLinks = [
-    { to: "/Dashboard", icon: faHome, text: "Home" },
+    { to: "/Dashboard", icon: faHome, text: "Dashboard" },
     { to: "/Assets", icon: faCoins, text: "Assets" },
     { to: "/deposits", icon: faWallet, text: "Deposit" },
     { to: "/Withdrawal", icon: faMoneyBillTransfer, text: "Withdraw" },
@@ -55,97 +55,126 @@ export default function DashboardSidebar() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="flex flex-col space-y-2 text-gray-400 h-screen">
-      <h1 className="font-bold text-slate-800">DASHBOARD</h1>
-      {/* Main Links */}
-      {mainLinks.map(({ to, icon, text }) => (
-        <Link
-          key={to}
-          to={to}
-          className={`flex items-center font-semibold gap-3 p-2 hover:text-teal-600 hover:bg-slate-800 rounded transition-colors ${
-            isActive(to)
-              ? "text-teal-600 bg-slate-800 border-l-4 border-teal-600"
-              : ""
-          }`}
-          aria-label={text}
-        >
-          <FontAwesomeIcon icon={icon} /> {text}
-        </Link>
-      ))}
+    <div className="flex flex-col h-full">
+      <div className="flex-1 overflow-y-auto py-2">
+        <div className="space-y-1 px-2">
+          {mainLinks.map(({ to, icon, text }) => (
+            <Link
+              key={to}
+              to={to}
+              className={`flex items-center p-3 rounded-lg transition-colors ${
+                isCollapsed ? "justify-center" : "justify-start"
+              } ${
+                isActive(to)
+                  ? "bg-slate-800 text-teal-500"
+                  : "hover:bg-slate-800 hover:text-teal-500 text-gray-400"
+              }`}
+            >
+              <FontAwesomeIcon
+                icon={icon}
+                className={`${isCollapsed ? "text-lg" : "text-lg mr-3"}`}
+              />
+              {!isCollapsed && (
+                <span className="text-sm whitespace-nowrap">{text}</span>
+              )}
+            </Link>
+          ))}
+        </div>
 
-      {/* Trading Links */}
-      <div className="mt-4">
-        <h3 className="text-sm font-semibold text-gray-400 uppercase">
-          Trading
-        </h3>
-        {tradingLinks.map(({ to, icon, text }) => (
-          <Link
-            key={to}
-            to={to}
-            className={`flex items-center gap-3 p-2 hover:text-teal-600 rounded transition-colors ${
-              isActive(to)
-                ? "text-teal-600 bg-slate-800 border-l-4 border-teal-600"
-                : ""
-            }`}
-            aria-label={text}
-          >
-            <FontAwesomeIcon icon={icon} /> {text}
-          </Link>
-        ))}
+        {!isCollapsed && (
+          <div className="mt-4 px-3">
+            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              Trading
+            </h3>
+          </div>
+        )}
+        <div className="space-y-1 px-2">
+          {tradingLinks.map(({ to, icon, text }, index) => (
+            <Link
+              key={to}
+              to={to}
+              className={`flex items-center p-3 rounded-lg transition-colors ${
+                isCollapsed && index >= 4
+                  ? "hidden"
+                  : isCollapsed
+                  ? "justify-center"
+                  : "justify-start"
+              } ${
+                isActive(to)
+                  ? "bg-slate-800 text-teal-500"
+                  : "hover:bg-slate-800 hover:text-teal-500 text-gray-400"
+              }`}
+            >
+              <FontAwesomeIcon
+                icon={icon}
+                className={`${isCollapsed ? "text-lg" : "text-lg mr-3"}`}
+              />
+              {!isCollapsed && (
+                <span className="text-sm whitespace-nowrap">{text}</span>
+              )}
+            </Link>
+          ))}
+        </div>
       </div>
 
-      {/* User Section */}
-      <div className="mt-4">
-        <h3 className="text-sm font-semibold text-gray-400 uppercase">User</h3>
+      <div className="mt-auto space-y-2">
+        {!isCollapsed && (
+          <div className="px-3 pt-4">
+            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              Account
+            </h3>
+          </div>
+        )}
+
         <div className="relative">
           <button
             onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-            className="flex items-center justify-between w-full p-2 hover:text-teal-600 rounded transition-colors"
+            className={`flex items-center w-full p-3 hover:text-teal-600 hover:bg-slate-800 rounded-lg transition-colors ${
+              isCollapsed ? "justify-center" : "justify-between"
+            }`}
             aria-label="User Menu"
           >
-            <span className="flex items-center gap-3">
-              <FontAwesomeIcon icon={faUser} /> User
+            <span className="flex items-center">
+              <div className="flex items-center justify-center w-8 h-8">
+                <FontAwesomeIcon icon={faUser} className="text-xl" />
+              </div>
+              {!isCollapsed && <span className="ml-3 text-base">User</span>}
             </span>
-            <span>{isUserMenuOpen ? "▲" : "▼"}</span>
+            {!isCollapsed && (
+              <span className="text-xs">{isUserMenuOpen ? "▲" : "▼"}</span>
+            )}
           </button>
 
-          {/* User Dropdown Menu */}
-          {isUserMenuOpen && (
-            <div
-              className="mt-1 w-full bg-slate-800 shadow-lg rounded-lg"
-              style={{ boxShadow: "0 0 10px 2px rgba(245, 158, 11, 0.5)" }}
-            >
+          {isUserMenuOpen && !isCollapsed && (
+            <div className="mt-1 ml-2 pl-6 border-l border-slate-700 space-y-2">
               {userLinks.map(({ to, icon, text }) => (
                 <Link
                   key={to}
                   to={to}
-                  className={`flex items-center gap-3 p-2 hover:text-teal-600 transition-colors ${
-                    isActive(to)
-                      ? "text-teal-600 bg-slate-800 border-l-4 border-teal-600"
-                      : ""
+                  className={`flex items-center p-2 hover:text-teal-600 transition-colors rounded ${
+                    isActive(to) ? "text-teal-600" : ""
                   }`}
-                  aria-label={text}
                 >
-                  <FontAwesomeIcon icon={icon} /> {text}
+                  <FontAwesomeIcon icon={icon} className="text-lg mr-3" />
+                  <span className="text-sm">{text}</span>
                 </Link>
               ))}
             </div>
           )}
         </div>
-      </div>
 
-      {/* Logout Link */}
-      <div className={isUserMenuOpen ? "mt-28" : "mt-2"}>
         <Link
           to="/"
-          className={`flex items-center gap-3 p-2 hover:text-teal-600 rounded transition-colors ${
-            isActive("/")
-              ? "text-teal-600 bg-slate-800 border-l-4 border-teal-600"
-              : ""
-          }`}
+          className={`flex items-center p-3 hover:text-teal-600 hover:bg-slate-800 rounded-lg transition-colors ${
+            isActive("/") ? "text-teal-600 bg-slate-800" : ""
+          } ${isCollapsed ? "justify-center" : "justify-start"}`}
           aria-label="Logout"
+          title={isCollapsed ? "Logout" : undefined}
         >
-          <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+          <div className="flex items-center justify-center w-8 h-8">
+            <FontAwesomeIcon icon={faSignOutAlt} className="text-xl" />
+          </div>
+          {!isCollapsed && <span className="ml-3 text-base">Logout</span>}
         </Link>
       </div>
     </div>

@@ -42,6 +42,7 @@ import ProjectDetail from "./pages/RealEstatedetails.jsx";
 import PlaceTradePage from "./pages/PlaceTrade.jsx";
 import AssetPage from "./pages/Assets.jsx";
 import { PrivateRoute } from "./PrivateRoute.jsx";
+import Layout from "./components/Layout.jsx";
 import ForgotPassword from "./app/(auth)/login/forgotpassword.jsx";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -77,98 +78,186 @@ const proRouter = createBrowserRouter([
     children: [
       {
         path: "/Dashboard",
-        element: <DashPage />,
+        element: (
+          <Layout>
+            <DashPage />
+          </Layout>
+        ),
       },
       {
         path: "/Assets",
-        element: <AssetPage />,
+        element: (
+          <Layout>
+            <AssetPage />
+          </Layout>
+        ),
       },
       {
         path: "/PlaceTrade",
-        element: <PlaceTradePage/>,
+        element: (
+          <Layout>
+            <PlaceTradePage />
+          </Layout>
+        ),
       },
       {
         path: "/Mining",
-        element: <MiningPage />,
+        element: (
+          <Layout>
+            <MiningPage />
+          </Layout>
+        ),
       },
       {
         path: "/Deposits",
-        element: <DepositPage />,
+        element: (
+          <Layout>
+            <DepositPage />
+          </Layout>
+        ),
       },
       {
         path: "/MyTraders",
-        element: <MyTraderPage />,
+        element: (
+          <Layout>
+            <MyTraderPage />
+          </Layout>
+        ),
       },
       {
         path: "/BuyCrypto",
-        element: <BuyCrypto />,
+        element: (
+          <Layout>
+            <BuyCrypto />
+          </Layout>
+        ),
       },
       {
         path: "/Account",
-        element: <AccountPage />,
+        element: (
+          <Layout>
+            <AccountPage />
+          </Layout>
+        ),
       },
       {
         path: "/Referrals",
-        element: <ReferralsPage />,
+        element: (
+          <Layout>
+            <ReferralsPage />
+          </Layout>
+        ),
       },
       {
         path: "/EmailUpdate",
-        element: <EmailUpdatePage />,
+        element: (
+          <Layout>
+            <EmailUpdatePage />
+          </Layout>
+        ),
       },
       {
         path: "/PasswordUpdate",
-        element: <PasswordUpdate />,
+        element: <PasswordUpdatePage />,
       },
       {
-        path: "/UpdatePhoto",
-        element: <UpdatePhotoPage />,
+        path: "/PhotoUpdate",
+        element: <PhotoUpdatePage />,
       },
       {
         path: "/Transactions",
-        element: <TransactionPage />,
+        element: (
+          <Layout>
+            <TransactionPage />
+          </Layout>
+        ),
       },
       {
         path: "/PaymentProof",
-        element: <PaymentProofPage />,
+        element: (
+          <Layout>
+            <PaymentProofPage />
+          </Layout>
+        ),
       },
       {
         path: "/Withdrawal",
-        element: <WithdrawalPage />,
+        element: (
+          <Layout>
+            <WithdrawalPage />
+          </Layout>
+        ),
       },
       {
         path: "/TradesRoi",
-        element: <TradesRoiPage />,
+        element: (
+          <Layout>
+            <TradesRoiPage />
+          </Layout>
+        ),
       },
       {
         path: "/MyCopytraders",
-        element: <MycopyTradersPage />,
+        element: (
+          <Layout>
+            <MycopyTradersPage />
+          </Layout>
+        ),
       },
       {
         path: "/BuyBots",
-        element: <BuyBotPage />,
+        element: (
+          <Layout>
+            <BuyBotPage />
+          </Layout>
+        ),
       },
       {
         path: "/Stake",
-        element: <StakePage />,
+        element: (
+          <Layout>
+            <StakePage />
+          </Layout>
+        ),
       },
       {
         path: "/Subscription",
-        element: <SubscriptionPage />,
+        element: (
+          <Layout>
+            <SubscriptionPage />
+          </Layout>
+        ),
       },
       {
         path: "/DailySignal",
-        element: <DailySignalPage />,
+        element: (
+          <Layout>
+            <DailySignalPage />
+          </Layout>
+        ),
       },
-    ]
+      {
+        path: "/RealEstate",
+        element: (
+          <Layout>
+            <RealestPage />
+          </Layout>
+        ),
+      },
+      {
+        path: "/VerifyAccount",
+        element: (
+          <Layout>
+            <VerifyAccountPage />
+          </Layout>
+        ),
+      },
+    ],
   },
-  // Public routes
+  // Public routes (remain unchanged)
   {
     path: "/ContactIndex",
     element: <ContactUs />,
-  },
-  {
-    path: "/RealEstate",
-    element: <RealestPage />,
   },
   {
     path: "/RealEstateDetails",
@@ -177,10 +266,6 @@ const proRouter = createBrowserRouter([
   {
     path: "/Modal",
     element: <Modal />,
-  },
-  {
-    path: "/VerifyAccount",
-    element: <VerifyAccountPage />,
   },
   {
     path: "/ParticleBackground",
@@ -223,6 +308,7 @@ const proRouter = createBrowserRouter([
   
 
 ]);
+
 
   root.render(
     <React.StrictMode>

@@ -1,9 +1,14 @@
-import { faFile, faFileAlt, faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import { useTheme } from "next-themes";
+import {
+  faFile,
+  faFileAlt,
+  faFilePdf,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 
-const ProjectDetail = ({ project, onClose }) => {
-  const [view, setView] = useState("property"); // State to manage the current view
+const ProjectDetail = ({ project, onClose, theme }) => {
+  const [view, setView] = useState("property"); //
 
   const projectDetails = {
     1: {
@@ -224,34 +229,62 @@ const ProjectDetail = ({ project, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center p-4">
-      <div className="bg-slate-800 p-6 sm:p-8 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto">
+      <div
+        className={`p-6 sm:p-8 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto ${
+          theme === "dark" ? "bg-slate-800" : "bg-white"
+        }`}
+      >
         <img
           src={project.image}
           alt={project.name}
           className="w-full h-48 sm:h-64 object-cover rounded-lg mb-4"
         />
-        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+        <h2
+          className={`text-2xl sm:text-3xl font-bold mb-4 ${
+            theme === "dark" ? "text-white" : "text-gray-800"
+          }`}
+        >
           {project.name}
         </h2>
-        <p className="text-gray-400 mb-4 sm:mb-6 text-lg">
+        <p
+          className={`mb-4 sm:mb-6 text-lg ${
+            theme === "dark" ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
           {project.profitRate}
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           <div>
-            <div className="text-md font-semibold flex flex-wrap gap-4 text-white mb-4">
+            <div
+              className={`text-md font-semibold flex flex-wrap gap-4 mb-4 ${
+                theme === "dark" ? "text-white" : "text-gray-800"
+              }`}
+            >
               <button
                 onClick={() => setView("property")}
-                className={`p-2 rounded-lg ${
-                  view === "property" ? "bg-teal-700" : "bg-slate-700"
+                className={`p-2 rounded-lg transition-colors ${
+                  view === "property"
+                    ? theme === "dark"
+                      ? "bg-teal-700"
+                      : "bg-teal-600 text-white"
+                    : theme === "dark"
+                    ? "bg-slate-700"
+                    : "bg-gray-200"
                 }`}
               >
                 The Property
               </button>
               <button
                 onClick={() => setView("document")}
-                className={`p-2 rounded-lg ${
-                  view === "document" ? "bg-teal-700" : "bg-slate-700"
+                className={`p-2 rounded-lg transition-colors ${
+                  view === "document"
+                    ? theme === "dark"
+                      ? "bg-teal-700"
+                      : "bg-teal-600 text-white"
+                    : theme === "dark"
+                    ? "bg-slate-700"
+                    : "bg-gray-200"
                 }`}
               >
                 Document
@@ -260,15 +293,27 @@ const ProjectDetail = ({ project, onClose }) => {
 
             {view === "property" ? (
               <>
-                <p className="text-gray-400 mb-4">
+                <p
+                  className={
+                    theme === "dark" ? "text-gray-400" : "text-gray-600"
+                  }
+                >
                   {details.propertyDescription}
                 </p>
                 {details.whyProperty.length > 0 && (
                   <>
-                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 sm:mb-4">
+                    <h3
+                      className={`text-lg sm:text-xl font-semibold mb-2 sm:mb-4 ${
+                        theme === "dark" ? "text-white" : "text-gray-800"
+                      }`}
+                    >
                       Why This Property:
                     </h3>
-                    <ul className="list-disc list-inside text-gray-400 mb-4">
+                    <ul
+                      className={`list-disc list-inside mb-4 ${
+                        theme === "dark" ? "text-gray-400" : "text-gray-600"
+                      }`}
+                    >
                       {details.whyProperty.map((point, index) => (
                         <li key={index}>{point}</li>
                       ))}
@@ -278,7 +323,11 @@ const ProjectDetail = ({ project, onClose }) => {
               </>
             ) : (
               <>
-                <p className="text-gray-400 mb-4">
+                <p
+                  className={
+                    theme === "dark" ? "text-gray-400" : "text-gray-600"
+                  }
+                >
                   {details.documentDescription}
                 </p>
                 <div className="flex flex-col gap-4">
@@ -288,10 +337,16 @@ const ProjectDetail = ({ project, onClose }) => {
                       href={doc.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-teal-400 hover:text-teal-200"
+                      className={`flex items-center gap-2 ${
+                        theme === "dark"
+                          ? "text-teal-400 hover:text-teal-200"
+                          : "text-teal-600 hover:text-teal-800"
+                      }`}
                     >
                       <FontAwesomeIcon
-                        className="h-6 text-teal-600"
+                        className={`h-6 ${
+                          theme === "dark" ? "text-teal-600" : "text-teal-500"
+                        }`}
                         icon={faFileAlt}
                       />
                       <span>{doc.name}</span>
@@ -303,62 +358,154 @@ const ProjectDetail = ({ project, onClose }) => {
           </div>
 
           <div>
-            <h3 className="text-lg sm:text-xl font-semibold text-white mb-4">
+            <h3
+              className={`text-lg sm:text-xl font-semibold mb-4 ${
+                theme === "dark" ? "text-white" : "text-gray-800"
+              }`}
+            >
               Project Breakdown
             </h3>
-            <div className="bg-slate-700 p-4 rounded-lg overflow-x-auto">
-              <table className="w-full border-collapse border border-slate-500 text-sm sm:text-base">
+            <div
+              className={`p-4 rounded-lg overflow-x-auto ${
+                theme === "dark" ? "bg-slate-700" : "bg-gray-100"
+              }`}
+            >
+              <table className="w-full border-collapse text-sm sm:text-base">
                 <thead>
-                  <tr className="bg-slate-800">
-                    <th className="text-gray-400 text-left p-2 sm:p-3 border border-slate-600">
+                  <tr
+                    className={
+                      theme === "dark" ? "bg-slate-800" : "bg-gray-200"
+                    }
+                  >
+                    <th
+                      className={`text-left p-2 sm:p-3 border ${
+                        theme === "dark"
+                          ? "text-gray-400 border-slate-600"
+                          : "text-gray-600 border-gray-300"
+                      }`}
+                    >
                       Type
                     </th>
-                    <th className="text-gray-400 text-left p-2 sm:p-3 border border-slate-600">
+                    <th
+                      className={`text-left p-2 sm:p-3 border ${
+                        theme === "dark"
+                          ? "text-gray-400 border-slate-600"
+                          : "text-gray-600 border-gray-300"
+                      }`}
+                    >
                       ACRES
                     </th>
-                    <th className="text-gray-400 text-left p-2 sm:p-3 border border-slate-600">
+                    <th
+                      className={`text-left p-2 sm:p-3 border ${
+                        theme === "dark"
+                          ? "text-gray-400 border-slate-600"
+                          : "text-gray-600 border-gray-300"
+                      }`}
+                    >
                       STRATEGY
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="text-white p-2 sm:p-3 border border-slate-600">
+                    <td
+                      className={`p-2 sm:p-3 border ${
+                        theme === "dark"
+                          ? "text-white border-slate-600"
+                          : "text-gray-800 border-gray-300"
+                      }`}
+                    >
                       {details.type}
                     </td>
-                    <td className="text-white p-2 sm:p-3 border border-slate-600">
+                    <td
+                      className={`p-2 sm:p-3 border ${
+                        theme === "dark"
+                          ? "text-white border-slate-600"
+                          : "text-gray-800 border-gray-300"
+                      }`}
+                    >
                       {details.acres}
                     </td>
-                    <td className="text-white p-2 sm:p-3 border border-slate-600">
+                    <td
+                      className={`p-2 sm:p-3 border ${
+                        theme === "dark"
+                          ? "text-white border-slate-600"
+                          : "text-gray-800 border-gray-300"
+                      }`}
+                    >
                       {details.strategy}
                     </td>
                   </tr>
                 </tbody>
               </table>
 
-              <table className="w-full border-collapse border border-slate-500 mt-4 text-sm sm:text-base">
+              <table
+                className={`w-full border-collapse mt-4 text-sm sm:text-base ${
+                  theme === "dark" ? "border-slate-500" : "border-gray-300"
+                }`}
+              >
                 <thead>
-                  <tr className="bg-slate-800">
-                    <th className="text-gray-400 text-left p-2 sm:p-3 border border-slate-600">
+                  <tr
+                    className={
+                      theme === "dark" ? "bg-slate-800" : "bg-gray-200"
+                    }
+                  >
+                    <th
+                      className={`text-left p-2 sm:p-3 border ${
+                        theme === "dark"
+                          ? "text-gray-400 border-slate-600"
+                          : "text-gray-600 border-gray-300"
+                      }`}
+                    >
                       OBJECTIVE
                     </th>
-                    <th className="text-gray-400 text-left p-2 sm:p-3 border border-slate-600">
+                    <th
+                      className={`text-left p-2 sm:p-3 border ${
+                        theme === "dark"
+                          ? "text-gray-400 border-slate-600"
+                          : "text-gray-600 border-gray-300"
+                      }`}
+                    >
                       MINIMUM
                     </th>
-                    <th className="text-gray-400 text-left p-2 sm:p-3 border border-slate-600">
+                    <th
+                      className={`text-left p-2 sm:p-3 border ${
+                        theme === "dark"
+                          ? "text-gray-400 border-slate-600"
+                          : "text-gray-600 border-gray-300"
+                      }`}
+                    >
                       ROI
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="text-white p-2 sm:p-3 border border-slate-600">
+                    <td
+                      className={`p-2 sm:p-3 border ${
+                        theme === "dark"
+                          ? "text-white border-slate-600"
+                          : "text-gray-800 border-gray-300"
+                      }`}
+                    >
                       {details.objective}
                     </td>
-                    <td className="text-white p-2 sm:p-3 border border-slate-600">
+                    <td
+                      className={`p-2 sm:p-3 border ${
+                        theme === "dark"
+                          ? "text-white border-slate-600"
+                          : "text-gray-800 border-gray-300"
+                      }`}
+                    >
                       {details.minimum}
                     </td>
-                    <td className="text-white p-2 sm:p-3 border border-slate-600">
+                    <td
+                      className={`p-2 sm:p-3 border ${
+                        theme === "dark"
+                          ? "text-white border-slate-600"
+                          : "text-gray-800 border-gray-300"
+                      }`}
+                    >
                       {details.roi}
                     </td>
                   </tr>
@@ -366,30 +513,72 @@ const ProjectDetail = ({ project, onClose }) => {
               </table>
             </div>
 
-            <h3 className="text-lg sm:text-xl font-semibold text-white mt-6 mb-4">
+            <h3
+              className={`text-lg sm:text-xl font-semibold mt-6 mb-4 ${
+                theme === "dark" ? "text-white" : "text-gray-800"
+              }`}
+            >
               Calculate your ROI
             </h3>
-            <p className="text-gray-400 mb-4">
+            <p className={theme === "dark" ? "text-gray-400" : "text-gray-600"}>
               You could earn up to {details.roi} on {details.minimum}
             </p>
-            <div className="bg-slate-900 p-4 rounded-lg">
-              <label className="text-gray-400 block mb-2">Amount:</label>
-              <div className="flex items-center bg-slate-950 p-2 rounded-lg text-gray-600 font-semibold">
+            <div
+              className={`p-4 rounded-lg ${
+                theme === "dark" ? "bg-slate-900" : "bg-gray-100"
+              }`}
+            >
+              <label
+                className={`block mb-2 ${
+                  theme === "dark" ? "text-gray-400" : "text-gray-600"
+                }`}
+              >
+                Amount:
+              </label>
+              <div
+                className={`flex items-center p-2 rounded-lg font-semibold ${
+                  theme === "dark"
+                    ? "bg-slate-950 text-gray-300"
+                    : "bg-white text-gray-800"
+                }`}
+              >
                 {details.value}
-                <span className="ml-auto bg-teal-800 text-slate-900 font-semibold px-2 py-1 rounded-md">
+                <span
+                  className={`ml-auto px-2 py-1 rounded-md ${
+                    theme === "dark"
+                      ? "bg-teal-800 text-white"
+                      : "bg-teal-600 text-white"
+                  }`}
+                >
                   USD
                 </span>
               </div>
-              <label className="text-gray-400 block mt-4 mb-2">
+              <label
+                className={`block mt-4 mb-2 ${
+                  theme === "dark" ? "text-gray-400" : "text-gray-600"
+                }`}
+              >
                 Duration (Days):
               </label>
-              <select className="w-full bg-slate-950 p-2 rounded-lg text-gray-600 font-semibold">
+              <select
+                className={`w-full p-2 rounded-lg font-semibold ${
+                  theme === "dark"
+                    ? "bg-slate-950 text-gray-300"
+                    : "bg-white text-gray-800"
+                }`}
+              >
                 <option>3 Days</option>
                 <option>5 Days</option>
                 <option>7 Days</option>
                 <option>30 Days</option>
               </select>
-              <button className="w-full bg-teal-600 text-white px-4 py-2 rounded-lg mt-4">
+              <button
+                className={`w-full px-4 py-2 rounded-lg mt-4 ${
+                  theme === "dark"
+                    ? "bg-teal-600 hover:bg-teal-500 text-white"
+                    : "bg-teal-500 hover:bg-teal-400 text-white"
+                }`}
+              >
                 Invest
               </button>
             </div>
@@ -399,7 +588,11 @@ const ProjectDetail = ({ project, onClose }) => {
         <div className="flex justify-end mt-6">
           <button
             onClick={onClose}
-            className="bg-teal-600 text-white px-6 py-2 rounded-lg"
+            className={`px-6 py-2 rounded-lg ${
+              theme === "dark"
+                ? "bg-teal-600 hover:bg-teal-500 text-white"
+                : "bg-teal-500 hover:bg-teal-400 text-white"
+            }`}
           >
             Close
           </button>
