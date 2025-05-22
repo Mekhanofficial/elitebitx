@@ -126,7 +126,7 @@ export default function DashPage() {
               <span className="truncate max-w-[180px] inline-block align-bottom">
                 {user.name}
               </span>{" "}
-              to EliteBitx!
+              to koinfu!
             </h1>
             <p className={`text-sm lg:text-base ${secondaryText} mb-4`}>
               Your gateway to the exciting world of cryptocurrency trading.

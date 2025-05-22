@@ -85,12 +85,12 @@ export default function FooterPage() {
       <hr className="my-6 border-gray-700" />
 
       <div className="flex flex-wrap justify-between items-center text-gray-400 text-sm">
-        <p>EliteBitxLTD © 2025. All Rights Reserved</p>
+        <p>koinfuLTD © 2025. All Rights Reserved</p>
         <div className="flex gap-4">
           <p className="hover:text-white cursor-pointer">Privacy Policy</p>
           <p className="hover:text-white cursor-pointer">Terms & Conditions</p>
         </div>
-        <img src={px12} alt="EliteBitx Logo" className="h-10" />
+        <img src={px12} alt="koinfu Logo" className="h-10" />
       </div>
     </footer>
   );

@@ -1,33 +1,46 @@
-import px24 from "../pictures/px24.webp";
 import React from "react";
+import px24 from "../pictures/px24.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage } from "@fortawesome/free-regular-svg-icons/faMessage";
+import { faMessage } from "@fortawesome/free-regular-svg-icons";
 
 const SideImg = () => {
   return (
-    <div className="grid place-items-center mt-20 bg-slate-950 mx-20 relative z-10">
-      <div className="relative w-72 col-[-1/1] row-[-1/1] sm:w-96">
-        <img src={px24} alt="" />
+    <div className="relative h-full min-h-[50vh] lg:min-h-screen flex items-center justify-center p-4 sm:p-8 ">
+      {/* Main image container - centered in the half-screen space */}
+      <div className="relative z-10 w-full max-w-xs sm:max-w-sm md:max-w-md">
+        <img
+          src={px24}
+          alt="Contact illustration"
+          className="w-full h-auto object-contain rounded-full" // Added rounded-full for circular image
+        />
+
+        {/* Email contact - absolutely centered on the image */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 flex items-center gap-3 bg-[rgba(25,40,65,0.9)] backdrop-blur-sm px-4 sm:px-6 py-2 sm:py-3 rounded-full border border-[rgba(190,216,255,0.2)]">
+          <span className="w-8 h-8 sm:w-10 sm:h-10 bg-[rgba(190,216,255,0.15)] grid place-items-center rounded-full">
+            <FontAwesomeIcon
+              icon={faMessage}
+              className="h-4 sm:h-5 text-[#97afd5]"
+            />
+          </span>
+          <p className="text-[#97afd5] font-medium text-sm sm:text-base">
+            support@koinFu.com
+          </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-[auto_1fr] items-center gap-3 col-[-1/1] row-[-1/1]">
-        <span className="w-8 h-8 bg-[rgba(190,_216,_255,_0.15)] grid place-content-center rounded-full">
-          <FontAwesomeIcon className="h-5" icon={faMessage} />
-        </span>
+      {/* Animated background circles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Large circle */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[400px] max-h-[400px]">
+          <div className="absolute inset-0 border-2 border-[rgba(185,210,244,0.3)] rounded-full"></div>
+          <div className="absolute inset-0 border-2 border-white rounded-full border-l-transparent border-b-transparent animate-spin-slow"></div>
+        </div>
 
-        <p className="text-[#97afd5] font-semibold text-sm sm:text-base">
-          support@primeHub.com
-        </p>
-      </div>
-
-      <div className="w-64 h-64 grid col-[-1/1] row-[-1/1] relative sm:w-96 sm:h-96">
-        <span className="w-full h-full border-2 border-[rgba(185,_210,_244,_0.3)] rounded-full block col-[-1/1] row-[-1/1]"></span>
-        <span className="w-full h-full border-2 border-white rounded-full  border-l-transparent border-b-transparent block col-[-1/1] row-[-1/1] animate-spin"></span>
-      </div>
-
-      <div className="w-56 h-56 grid col-[-1/1] row-[-1/1] sm:w-80 sm:h-80">
-        <span className="w-full h-full border-2 border-[rgba(185,_210,_244,_0.3)] rounded-full block col-[-1/1] row-[-1/1]"></span>
-        <span className="w-full h-full border-2 border-white rounded-full  border-l-transparent border-r-transparent block col-[-1/1] row-[-1/1] animate-spin"></span>
+        {/* Medium circle */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[45vw] h-[45vw] max-w-[300px] max-h-[300px]">
+          <div className="absolute inset-0 border-2 border-[rgba(185,210,244,0.3)] rounded-full"></div>
+          <div className="absolute inset-0 border-2 border-white rounded-full border-l-transparent border-r-transparent animate-spin-slow animation-delay-1000"></div>
+        </div>
       </div>
     </div>
   );
