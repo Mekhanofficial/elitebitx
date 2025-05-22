@@ -5,7 +5,7 @@ import HeaderPage from "../components/Header";
 
 export default function ReferralsPage() {
   const { theme } = useTheme();
-  const referralLink = "https://EliteBitx.net/log_opt/register.php?ref=457689";
+  const referralLink = "https://koinfu.net/log_opt/register.php?ref=457689";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(referralLink);

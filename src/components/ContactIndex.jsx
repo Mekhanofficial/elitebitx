@@ -1,57 +1,69 @@
-
 import React from "react";
 import SideImg from "./ContactImg";
 import Input from "./Input";
-import Button from "./Buttons";
 
 const ContactUs = () => {
   return (
     <section
       id="contact-us"
-      className="grid gap-20 bg-slate-950 custom-container lg:grid-cols-[auto_1fr] relative z-10"
+      className="bg-slate-950 relative z-10 min-h-screen flex items-center"
     >
-      <SideImg />
+      <div className="w-full flex flex-col lg:flex-row">
+        {/* Image Half - takes exactly 50% width */}
+        <div className="w-full lg:w-1/2">
+          <SideImg />
+        </div>
 
-      <div className="mx-20">
-        <h2 className="text-white mt-10 text-xl md:text-2xl">CONTACT US</h2>
-        <p className="mt-5 text-[#97afd5]">
-          We are always open and we welcome and questions you have for our team.
-          If you wish to get in touch, please fill out the form below. Someone
-          from our team will get back to you shortly.
-        </p>
+        {/* Form Half - takes exactly 50% width */}
+        <div className="w-full lg:w-1/2 py-12 px-4 sm:px-8 lg:px-12 xl:px-16 flex items-center">
+          <div className="w-full max-w-lg mx-auto">
+            <h2 className="text-white text-2xl md:text-3xl font-medium">
+              CONTACT US
+            </h2>
+            <p className="mt-4 text-[#97afd5] text-base md:text-lg">
+              We are always open and we welcome any questions you have for our
+              team. If you wish to get in touch, please fill out the form below.
+            </p>
 
-        <form action="" onSubmit={(e) => e.preventDefault()} className="mt-10">
-          <div className="grid gap-10 sm:grid-cols-2">
-            <Input
-              id={"name"}
-              label={"your name"}
-              placeholder={"Introduce yourself"}
-            />
-            <Input
-              id={"name"}
-              label={"your email"}
-              placeholder={"Who do we reply to"}
-            />
+            <form onSubmit={(e) => e.preventDefault()} className="mt-8">
+              <div className="grid gap-6 sm:grid-cols-2">
+                <Input
+                  id="name"
+                  label="Your name"
+                  placeholder="Introduce yourself"
+                />
+                <Input
+                  id="email"
+                  label="Your email"
+                  placeholder="Who do we reply to"
+                  type="email"
+                />
+              </div>
+
+              <div className="mt-8">
+                <label
+                  htmlFor="message"
+                  className="text-white uppercase text-sm font-medium block mb-2"
+                >
+                  Your message
+                </label>
+                <textarea
+                  id="message"
+                  placeholder="Leave your question or comment here"
+                  className="w-full border border-[rgba(101,119,151,0.4)] rounded text-[#97afd5] outline-none placeholder:text-[#97afd5] placeholder:opacity-70 px-4 py-3 bg-transparent h-40 resize-none focus:border-blue-500 transition-colors"
+                  required
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                className="mt-8 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-300 w-full sm:w-auto"
+              >
+                Send Message
+              </button>
+            </form>
           </div>
-
-          <div className="grid gap-3 mt-10">
-            <label htmlFor="" className="text-white uppercase">
-              your message
-            </label>
-            <textarea
-              id=""
-              placeholder="Leave your question or comment here"
-              className="border border-[rgba(101,_119,_151,_0.4)] rounded-sm text-[#97afd5] outline-none placeholder:text-[#97afd5] placeholder:opacity-70 px-5 py-3 bg-transparent h-40 resize-none"
-            ></textarea>
-          </div>
-
-          <button
-            type="fill"
-            className="border-zinc-400  block ml-auto mt-10` p-2  border-x-2  font-semibold  text-white text-sm rounded-xl w-36 mx-5 mt-5 mb-10 hover:bg-gray-900 hover:border-zinc-700 lg:w-44 lg:p-3 hover:border-x-4 hover:font-semibold"
-          >
-            Send
-          </button>
-        </form>
+        </div>
       </div>
     </section>
   );
